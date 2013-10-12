@@ -1,0 +1,8 @@
+useDynLib(hypervolume)
+
+export(hypervolume, plot.HypervolumeList, plot.Hypervolume, hypervolume_set, hypervolume_inclusion_test, summary.Hypervolume, summary.HypervolumeList, estimate_bandwidth) 
+
+exportClasses(
+    "Hypervolume",
+     "HypervolumeList" 
+)
