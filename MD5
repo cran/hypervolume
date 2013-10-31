@@ -1,4 +1,4 @@
-423ed36d7cac3bab280fe875e37e9747 *DESCRIPTION
+f90fab1d6eb45b2206e7d88f679118b8 *DESCRIPTION
 8c313cb41e2ccdf6e3ada18a6b2d701e *NAMESPACE
 90d606a1f74c992b820c7503af48623d *R/AllClassDefinitions.R
 f5da94243ff42f0fd902be30b122e158 *R/RcppExports.R
@@ -32,6 +32,6 @@ ddd6db1457f654fb7dcd9dc4624ece85 *man/quercus.Rd
 5adbeb086ddcab02230f00142571c490 *src/KDTree.h
 b3f86c20b81b51f5162874977d38784d *src/Makevars
 73505498722ad4b07b0ddb3067e92523 *src/Makevars.win
-709c0dfae9a72ca1e72ecc06014d3b4c *src/MyHeaps.h
+a5c31f091aae6e7cd7a7719236a172cf *src/MyHeaps.h
 2457c9f98c4a36b87717342cd04fda4a *src/RcppExports.cpp
 f736b7a522b232312fb8dbf2ef8a8741 *src/convert.cpp
