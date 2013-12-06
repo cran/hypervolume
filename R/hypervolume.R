@@ -43,16 +43,23 @@ hypervolume <- function(data, repsperpoint, bandwidth, quantile=0.0, name=NULL, 
                       np, dim))
     }
     
-    sds = apply(data, 2, sd)
-    if (sd(sds) > 5)
+    if (nrow(data) > 2)
     {
-      finalstring = 'Some dimensions have much more higher standard deviations than others:\n'
-      for (i in 1:length(sds))
+      sds = apply(data, 2, sd)
+      if (sd(sds) > 5)
       {
-        finalstring <- c(finalstring, sprintf('\t%s %.2f\n',names(sds)[i], sds[i]))
-      }
-      warning(c(finalstring, 'Consider rescaling axes before analysis.'))
-		}
+        finalstring = 'Some dimensions have much more higher standard deviations than others:\n'
+        for (i in 1:length(sds))
+        {
+          finalstring <- c(finalstring, sprintf('\t%s %.2f\n',names(sds)[i], sds[i]))
+        }
+        warning(c(finalstring, 'Consider rescaling axes before analysis.'))
+		  }
+    }
+    else
+    {
+      warning('Data contain two or fewer observations - cannot perform scaling checks. ')
+    }
 	}
   
   ### ERROR CHECKING FINISHED - BEGIN ALGORITHM

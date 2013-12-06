@@ -1,11 +1,11 @@
-f90fab1d6eb45b2206e7d88f679118b8 *DESCRIPTION
+f79c6f0ad1eeba6464c047aee8849917 *DESCRIPTION
 8c313cb41e2ccdf6e3ada18a6b2d701e *NAMESPACE
 90d606a1f74c992b820c7503af48623d *R/AllClassDefinitions.R
 f5da94243ff42f0fd902be30b122e158 *R/RcppExports.R
 f24e93edef20086a7cccdc7a26dac66c *R/estimate_bandwidth.R
 ee222248c9ab89dbe628aec12c97e21f *R/evalfrectangular.R
 b23431c3608701685123cc890a7a0e7e *R/evalfspherical.R
-f05d2d8808fab9b0904eda3f4ad0343a *R/hypervolume.R
+bec7e4cd00c9b88781e4603e0c08f94b *R/hypervolume.R
 b81497adcc35f6da3fd40ec9436be27d *R/hypervolume_inclusion_test.R
 8fd976ac413724f6c81c0c840cb19c63 *R/hypervolume_plot.R
 7e231ea2e8224aeb6feaae0002171206 *R/hypervolume_set.R
