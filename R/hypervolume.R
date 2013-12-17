@@ -1,7 +1,14 @@
 hypervolume <- function(data, repsperpoint, bandwidth, quantile=0.0, name=NULL, verbose=T, warnings=T)
-{   
+{
+  data <- as.data.frame(data)
+  
   dim = ncol(data)
   np = nrow(data)
+  
+  if (nrow(data) == 0)
+  {
+    stop('Hypervolume cannot be computed with empty input data.')
+  }
   
   if (any(is.na(data)))
   {
@@ -103,7 +110,7 @@ hypervolume <- function(data, repsperpoint, bandwidth, quantile=0.0, name=NULL, 
   weightedsample = unique(weightedsample)
 
   # prepare object for output
-  points_uniform_final = point_counts_final[weightedsample,1:(ncol(point_counts_final)-1)]
+  points_uniform_final = as.data.frame(point_counts_final[weightedsample,1:(ncol(point_counts_final)-1)])
   names(points_uniform_final) = names(data)
   density_uniform_final = point_counts_final[weightedsample,ncol(point_counts_final)]
   point_density_final = nrow(points_uniform_final) / vc$final_volume
@@ -117,9 +124,10 @@ hypervolume <- function(data, repsperpoint, bandwidth, quantile=0.0, name=NULL, 
   result@Volume = vc$final_volume
   result@PointDensity = point_density_final
   result@Bandwidth = bandwidth
+  result@RepsPerPoint = repsperpoint
   result@QuantileThresholdDesired = quantile
   result@QuantileThresholdObtained = vc$quantile_obtained
-  result@RandomUniformPointsThresholded = as.matrix(points_uniform_final); dimnames(result@RandomUniformPointsThresholded)[[2]] = dimnames(data)[[2]];
+  result@RandomUniformPointsThresholded = as.matrix(points_uniform_final);  
   result@ProbabilityDensityAtRandomUniformPoints = density_uniform_final
   
   if (verbose==TRUE)

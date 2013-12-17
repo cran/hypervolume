@@ -1,4 +1,4 @@
-hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T)
+hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T, check_memory=T)
 {
   # determine dataset sizes and dimensionality
   np1 = nrow(hv1@RandomUniformPointsThresholded)
@@ -29,9 +29,14 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T)
   numpointstokeep_hv1 = floor(reduction_factor * mindensity * hv1@Volume)
   numpointstokeep_hv2 = floor(reduction_factor * mindensity * hv2@Volume)
   
-  if (verbose==TRUE)
+  if (verbose==TRUE | check_memory==TRUE)
   {
     cat(sprintf('Retaining %d points in hv1 and %d points in hv2.\n', numpointstokeep_hv1, numpointstokeep_hv2))
+    if (check_memory == TRUE)
+    {
+      ans <- cat(sprintf('This will minimimally require %d pairwise comparisons. Re-run function with check_memory=FALSE if acceptable; otherwise use a smaller value of reduction_factor.\n', numpointstokeep_hv1*numpointstokeep_hv2))
+      return(numpoints=numpointstokeep_hv1*numpointstokeep_hv2)
+    }
   }
   
   if (reduction_factor < 1)
@@ -66,13 +71,15 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T)
   }
   
   # subset to retain only those 'close enough' points
-  p2_in_1 = hv2_points_ss[p2_in_1_all > 0,]
-  p1_in_2 = hv1_points_ss[p1_in_2_all > 0,]
+  p2_in_1 = as.data.frame(hv2_points_ss)[p2_in_1_all > 0,]
+  p1_in_2 = as.data.frame(hv1_points_ss)[p1_in_2_all > 0,]
   
+
   # the final volume is proportional to the fraction 
   # of points in hv1 in hv2, and vice versa
   v1 = nrow(p1_in_2) / nrow(hv1_points_ss) * hv1@Volume
   v2 = nrow(p2_in_1) / nrow(hv2_points_ss) * hv2@Volume
+
   
   # take the lower estimate as a conservative estimate
   final_volume_intersection = min(c(v1,v2))
@@ -80,12 +87,14 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T)
   # create the intersection point cloud by merging both sets of sampled points.
   final_points_intersection = unique(rbind(p1_in_2, p2_in_1))
   final_density_intersection = nrow(final_points_intersection) / final_volume_intersection
+ 
   
   # now find the union point cloud
   p1_not_in_2 = hv1_points_ss[p1_in_2_all == 0,] # the points only in the first hypervolume
   p2_not_in_1 = hv2_points_ss[p2_in_1_all == 0,] # the points only in the second hypervolume
   
   num_points_to_sample_in_intersection = floor(point_density * final_volume_intersection) # choose the right number of points to keep the point density constant
+  
   p_in_1_and_2 = final_points_intersection[sample(1:nrow(final_points_intersection), size=num_points_to_sample_in_intersection),] # randomly sample the intersection to grab
   
   final_volume_union = hv1@Volume + hv2@Volume - final_volume_intersection # union is sum minus intersection 
@@ -114,6 +123,7 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T)
   result_intersection@Volume = final_volume_intersection
   result_intersection@PointDensity = final_density_intersection
   result_intersection@Bandwidth = rep(NaN,dim)
+  result_intersection@RepsPerPoint = NaN
   result_intersection@QuantileThresholdDesired = 0
   result_intersection@QuantileThresholdObtained = 0
   result_intersection@RandomUniformPointsThresholded = as.matrix(final_points_intersection); dimnames(result_intersection@RandomUniformPointsThresholded) = dimnames(hv1@RandomUniformPointsThresholded);
@@ -126,6 +136,7 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T)
   result_union@Volume = final_volume_union
   result_union@PointDensity = final_density_union
   result_union@Bandwidth = rep(NaN,dim)
+  result_union@RepsPerPoint = NaN
   result_union@QuantileThresholdDesired = 0
   result_union@QuantileThresholdObtained = 0
   result_union@RandomUniformPointsThresholded = as.matrix(final_points_union); dimnames(result_union@RandomUniformPointsThresholded) = dimnames(hv1@RandomUniformPointsThresholded);
@@ -138,6 +149,7 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T)
   result_unique_hv1@Volume = final_volume_unique_hv1
   result_unique_hv1@PointDensity = final_density_unique_1
   result_unique_hv1@Bandwidth = rep(NaN,dim)
+  result_unique_hv1@RepsPerPoint = NaN
   result_unique_hv1@QuantileThresholdDesired = 0
   result_unique_hv1@QuantileThresholdObtained = 0
   result_unique_hv1@RandomUniformPointsThresholded = as.matrix(final_points_in_unique_1); dimnames(result_unique_hv1@RandomUniformPointsThresholded) = dimnames(hv1@RandomUniformPointsThresholded);
@@ -150,6 +162,7 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T)
   result_unique_hv2@Volume = final_volume_unique_hv2
   result_unique_hv2@PointDensity = final_density_unique_2
   result_unique_hv2@Bandwidth = rep(NaN,dim)
+  result_unique_hv2@RepsPerPoint = NaN
   result_unique_hv2@QuantileThresholdDesired = 0
   result_unique_hv2@QuantileThresholdObtained = 0
   result_unique_hv2@RandomUniformPointsThresholded = as.matrix(final_points_in_unique_2); dimnames(result_unique_hv2@RandomUniformPointsThresholded) = dimnames(hv2@RandomUniformPointsThresholded);

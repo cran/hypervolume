@@ -24,7 +24,7 @@ if (exists('doHypervolumeQuercusDemo')==TRUE)
   hv_rubra = hypervolume(climate_rubra,quantile=0.0,reps=1000,bandwidth=estimate_bandwidth(climate_rubra))
   
   # determine intersection and unique components of the overlap
-  hv_set = hypervolume_set(hv_alba, hv_rubra, reduction_factor = 0.5)
+  hv_set = hypervolume_set(hv_alba, hv_rubra, reduction_factor = 0.5, check_memory=FALSE)
   
   # put all the output volumes in one convenient place
   volumes <- c(Alba=hv_alba@Volume, Rubra=hv_rubra@Volume, sapply(hv_set@HVList, function(x) { x@Volume }))
