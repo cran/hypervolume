@@ -6,3 +6,7 @@ exportClasses(
     "Hypervolume",
      "HypervolumeList" 
 )
+
+import(rgl)
+import(Rcpp)
+import(methods)

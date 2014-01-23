@@ -8,6 +8,7 @@ plot.Hypervolume <- function(x, ...)
 
 plot.HypervolumeList <- function(x, npmax = 1000, colors=rainbow(length(x@HVList)), names=NULL, reshuffle=TRUE, showdensity=TRUE,showdata=TRUE,darkfactor=0.5,cex.random=0.5,cex.data=0.75,cex.axis=0.75,cex.names=1.0,cex.legend=0.75,legend=TRUE, varlims=NULL,pairplot=TRUE,whichaxes=NULL,...)
 {
+
   alldims = sapply(x@HVList, function(z) { z@Dimensionality })
   allnames = sapply(x@HVList, function(z) { z@Name })
   stopifnot(all(alldims[1] == alldims))
@@ -133,16 +134,16 @@ plot.HypervolumeList <- function(x, npmax = 1000, colors=rainbow(length(x@HVList
     
     if (all(is.numeric(whichaxes)))
     {
-      axesnames <- names(data)[whichaxes]
+      axesnames <- names
     }
-    
-    plot3d(all[,whichaxes],col=colorlist,xlab=axesnames[1], ylab=axesnames[2], zlab=axesnames[3], xlim=varlims[[1]],ylim=varlims[[2]],zlim=varlims[[3]],size=cex.random,type='p',expand=1.05)
+
+    rgl::plot3d(all[,whichaxes],col=colorlist,xlab=axesnames[1], ylab=axesnames[2], zlab=axesnames[3], xlim=varlims[[1]],ylim=varlims[[2]],zlim=varlims[[3]],size=cex.random,type='p',expand=1.05)
     
     if (legend==TRUE)
     {
       for (i in 1:length(allnames))
       {
-        mtext3d(allnames[i],edge='x-+',line=1+i*cex.legend*1.25,color=colors[i],cex=cex.legend)  
+        rgl::mtext3d(allnames[i],edge='x-+',line=1+i*cex.legend*1.25,color=colors[i],cex=cex.legend)  
       }
     }
     
@@ -150,7 +151,7 @@ plot.HypervolumeList <- function(x, npmax = 1000, colors=rainbow(length(x@HVList
     {
       if (!any(is.nan(as.matrix(alldata[,whichaxes]))))
       {
-        points3d(x=alldata[,whichaxes[1]], y=alldata[,whichaxes[2]], z=alldata[,whichaxes[3]], col=colorlistdata,cex=cex.data,pch=16)
+        rgl::points3d(x=alldata[,whichaxes[1]], y=alldata[,whichaxes[2]], z=alldata[,whichaxes[3]], col=colorlistdata,cex=cex.data,pch=16)
       }
     }
   }

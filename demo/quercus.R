@@ -1,5 +1,8 @@
 if (exists('doHypervolumeQuercusDemo')==TRUE)
 {
+  require(raster)
+  require(maps)
+  
   # load in lat/lon data
   data('quercus') 
   data_alba = subset(quercus, Species=="Quercus alba")[,c("Longitude","Latitude")]
