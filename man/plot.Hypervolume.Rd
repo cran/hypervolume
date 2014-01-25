@@ -84,7 +84,4 @@ hv1 = hypervolume(subset(iris, Species=="setosa")[,1:4],reps=1000,bandwidth=0.2)
 
 # choose fixed axes
 plot(hv1, pair=TRUE, npmax=500, varlims=list(c(3,6),c(2,5),c(0,3),c(-1,1)))
-
-# show one 3D projection of 4D hypervolume
-plot(hv1, npmax=500, pair=FALSE, whichaxes=c(1,2,4))
 }

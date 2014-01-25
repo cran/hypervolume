@@ -1,4 +1,4 @@
-d4c0c9527e6d5129266bfb7f34d633a0 *DESCRIPTION
+cbbf607890feaaa324e5bf92ae778a89 *DESCRIPTION
 2756fee7b0b610cd958eae0ec8837148 *NAMESPACE
 39a81b4d2ba37ed46c20665d08ae8728 *R/AllClassDefinitions.R
 f5da94243ff42f0fd902be30b122e158 *R/RcppExports.R
@@ -28,7 +28,7 @@ bae0616e270904ee68ea9c436a7a755c *man/hypervolume-package.Rd
 d9cd2d5e7a6e0d747d61d5ed832019dc *man/hypervolume_importance.Rd
 174a71feac826964cf55bc9479e24773 *man/hypervolume_inclusion_test.Rd
 058834a911258b44be5af0577f9d3426 *man/hypervolume_set.Rd
-054c60fe325b9380ccf01dc3cb67bb9b *man/plot.Hypervolume.Rd
+b98f433b1cfffbaff256a8b1db7d2b89 *man/plot.Hypervolume.Rd
 ddd6db1457f654fb7dcd9dc4624ece85 *man/quercus.Rd
 602651076b4f95c114db380927a7d6c4 *man/summary.Hypervolume.Rd
 5adbeb086ddcab02230f00142571c490 *src/KDTree.h
