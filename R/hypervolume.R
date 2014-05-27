@@ -1,4 +1,4 @@
-hypervolume <- function(data, repsperpoint, bandwidth, quantile=0.0, name=NULL, verbose=T, warnings=T)
+hypervolume <- function(data, repsperpoint=1000, bandwidth, quantile=0.0, name=NULL, verbose=T, warnings=T)
 {
   data <- as.data.frame(data)
   
@@ -53,15 +53,19 @@ hypervolume <- function(data, repsperpoint, bandwidth, quantile=0.0, name=NULL, 
     if (nrow(data) > 2)
     {
       sds = apply(data, 2, sd)
-      if (sd(sds) > 5)
+      sdsds <- sd(sds)
+      if (!any(is.na(sdsds)))
       {
-        finalstring = 'Some dimensions have much more higher standard deviations than others:\n'
-        for (i in 1:length(sds))
-        {
-          finalstring <- c(finalstring, sprintf('\t%s %.2f\n',names(sds)[i], sds[i]))
-        }
-        warning(c(finalstring, 'Consider rescaling axes before analysis.'))
-		  }
+			if (sd(sds) > 5)
+   			{
+   	     		finalstring = 'Some dimensions have much more higher standard deviations than others:\n'
+   	     		for (i in 1:length(sds))
+       	 		{
+        			finalstring <- c(finalstring, sprintf('\t%s %.2f\n',names(sds)[i], sds[i]))
+        		}
+        		warning(c(finalstring, 'Consider rescaling axes before analysis.'))
+		 	}
+		}
     }
     else
     {
@@ -95,7 +99,19 @@ hypervolume <- function(data, repsperpoint, bandwidth, quantile=0.0, name=NULL, 
   # infer the total volume based on the random point counts and the quantile
   # note that it may not be possible to achieve the exact quantile specified
   vc = volume_calculation(point_counts, point_density, quantile,verbose)
-
+  
+  disjunctfactor <- vc$final_volume / (nrow(as.matrix(data)) * prod(2*bandwidth))
+  
+  
+  # see if the points are disjunct (if the total volume equals the summed volume of the hyperbox around each point)
+  if (disjunctfactor > 0.9)
+  {
+    if (warnings==TRUE)
+    {
+      warning(sprintf('Disjunct factor: %.2f\nRatio of inferred volume to summed volume of hyperbox kernels around each data point is close to unity. Points are likely disjunct. Consider increasing the bandwidth.',disjunctfactor))
+  
+    }
+  }
   # threshold the random points to include only those above the chosen quantile threshold
   point_counts_final = cbind(data_points, point_counts)[point_counts >= vc$index,]
   
@@ -118,13 +134,15 @@ hypervolume <- function(data, repsperpoint, bandwidth, quantile=0.0, name=NULL, 
   # clean up memory
   gc()
   
-  result = new("Hypervolume", Name=ifelse(is.null(name), deparse(substitute(data)), toString(name)))
+
+  result = new("Hypervolume", Name=ifelse(is.null(name), "untitled", toString(name)))
   result@Data = as.matrix(data)
   result@Dimensionality = dim
   result@Volume = vc$final_volume
   result@PointDensity = point_density_final
   result@Bandwidth = bandwidth
   result@RepsPerPoint = repsperpoint
+  result@DisjunctFactor = disjunctfactor
   result@QuantileThresholdDesired = quantile
   result@QuantileThresholdObtained = vc$quantile_obtained
   result@RandomUniformPointsThresholded = as.matrix(points_uniform_final);  

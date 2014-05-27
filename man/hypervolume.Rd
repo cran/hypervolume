@@ -8,7 +8,7 @@ Hypervolume construction
 Constructs a hypervolume from a set of observations via thresholding a kernel density estimate of the observations. Assumes a hyperbox kernel.
 }
 \usage{
-hypervolume(data, repsperpoint, bandwidth, 
+hypervolume(data, repsperpoint=1000, bandwidth, 
   quantile = 0, name = NULL, 
   verbose = T, warnings = T)
 }
@@ -44,6 +44,6 @@ A \code{\link{Hypervolume-class}} object corresponding to the inferred hypervolu
 }
 \examples{
 data(iris)
-hv1 = hypervolume(subset(iris, Species=="setosa")[,1:4],reps=1000,bandwidth=0.2)
+hv1 = hypervolume(subset(iris, Species=="setosa")[,1:4],bandwidth=0.2)
 summary(hv1)
 }

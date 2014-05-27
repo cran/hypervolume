@@ -4,6 +4,34 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T, check_memor
   np1 = nrow(hv1@RandomUniformPointsThresholded)
   np2 = nrow(hv2@RandomUniformPointsThresholded)
   
+  # handle the cases when one of the hypervolumes is empty
+  if (np1 == 0 | is.null(np1))
+  {
+    warning('hv1 has no random points and is empty.')
+    result = new("HypervolumeList")
+    result@HVList = list(
+        Intersection = hv1, 
+        Union = hv2, 
+        Unique_1 = hv1, 
+        Unique_2 = hv2
+        )
+    
+    return(result)
+  }
+  if (np2 == 0 | is.null(np2))
+  {
+    warning('hv2 has no random points and is empty.')
+    result = new("HypervolumeList")
+    result@HVList = list(
+      Intersection = hv2, 
+      Union = hv1, 
+      Unique_1 = hv2, 
+      Unique_2 = hv1
+    )
+    
+    return(result)
+  }
+  
   hv1_point_density = np1 / hv1@Volume
   hv2_point_density = np2 / hv2@Volume
   

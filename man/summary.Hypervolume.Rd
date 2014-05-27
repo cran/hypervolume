@@ -1,6 +1,8 @@
 \name{summary.Hypervolume}
 \alias{summary.Hypervolume}
 \alias{summary.HypervolumeList}
+\alias{show.Hypervolume}
+\alias{show.HypervolumeList}
 \title{
 Summary of hypervolume
 }
