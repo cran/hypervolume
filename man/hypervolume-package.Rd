@@ -55,5 +55,5 @@ The algorithms are stochastic and depend on the state of the random number gener
 Benjamin Blonder <bblonder@gmail.com>
 }
 \references{
-Blonder, B., Lamanna, C., Violle, C., Enquist, B. The n-dimensional hypervolume. Global Ecology and Biogeography (in press)
+Blonder, B., Lamanna, C., Violle, C. and Enquist, B. J. (2014), The n-dimensional hypervolume. Global Ecology and Biogeography, 23: 595-609. doi: 10.1111/geb.12146
 }

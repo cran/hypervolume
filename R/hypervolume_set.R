@@ -148,6 +148,7 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T, check_memor
   result_intersection@Name = sprintf("Intersection of (%s, %s)", hv1@Name, hv2@Name)
   result_intersection@Data = matrix(NaN,nrow=1,ncol=dim)
   result_intersection@Dimensionality = dim
+  result_intersection@DisjunctFactor = NaN
   result_intersection@Volume = final_volume_intersection
   result_intersection@PointDensity = final_density_intersection
   result_intersection@Bandwidth = rep(NaN,dim)
@@ -161,6 +162,7 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T, check_memor
   result_union@Name = sprintf("Union of (%s, %s)", hv1@Name, hv2@Name)
   result_union@Data = matrix(NaN,nrow=1,ncol=dim)
   result_union@Dimensionality = dim
+  result_union@DisjunctFactor = NaN
   result_union@Volume = final_volume_union
   result_union@PointDensity = final_density_union
   result_union@Bandwidth = rep(NaN,dim)
@@ -174,6 +176,7 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T, check_memor
   result_unique_hv1@Name = sprintf("Unique component of (%s) relative to (%s)", hv1@Name, hv2@Name)
   result_unique_hv1@Data = matrix(NaN,nrow=1,ncol=dim)
   result_unique_hv1@Dimensionality = dim
+  result_unique_hv1@DisjunctFactor = NaN
   result_unique_hv1@Volume = final_volume_unique_hv1
   result_unique_hv1@PointDensity = final_density_unique_1
   result_unique_hv1@Bandwidth = rep(NaN,dim)
@@ -187,6 +190,7 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T, check_memor
   result_unique_hv2@Name = sprintf("Unique component of (%s) relative to (%s)", hv2@Name, hv1@Name)
   result_unique_hv2@Data = matrix(NaN,nrow=1,ncol=dim)
   result_unique_hv2@Dimensionality = dim
+  result_unique_hv2@DisjunctFactor = NaN
   result_unique_hv2@Volume = final_volume_unique_hv2
   result_unique_hv2@PointDensity = final_density_unique_2
   result_unique_hv2@Bandwidth = rep(NaN,dim)

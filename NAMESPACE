@@ -1,15 +1,15 @@
 useDynLib(hypervolume)
 
-export(hypervolume, plot.HypervolumeList, plot.Hypervolume, hypervolume_set, hypervolume_inclusion_test, summary.Hypervolume, summary.HypervolumeList, estimate_bandwidth, hypervolume_importance, nonconvexfeatures) 
+export(hypervolume, plot.HypervolumeList, plot.Hypervolume, hypervolume_set, hypervolume_inclusion_test, summary.Hypervolume, summary.HypervolumeList, estimate_bandwidth, hypervolume_importance, nonconvexfeatures, get_volume, get_volume.Hypervolume, get_volume.HypervolumeList) 
 
 exportClasses(
     "Hypervolume",
      "HypervolumeList" 
 )
 
-import(rgl)
 import(geometry)
 import(igraph)
 import(MASS)
 import(Rcpp)
 import(methods)
+import(rgl)

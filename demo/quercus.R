@@ -30,7 +30,7 @@ if (exists('doHypervolumeQuercusDemo')==TRUE)
   hv_set = hypervolume_set(hv_alba, hv_rubra, reduction_factor = 0.5, check_memory=FALSE)
   
   # put all the output volumes in one convenient place
-  volumes <- c(Alba=hv_alba@Volume, Rubra=hv_rubra@Volume, sapply(hv_set@HVList, function(x) { x@Volume }))
+  volumes <- c(Alba=get_volume(hv_alba), Rubra=get_volume(hv_rubra), get_volume(hv_set))
   
   # do species distribution modeling
   # get all the climate values

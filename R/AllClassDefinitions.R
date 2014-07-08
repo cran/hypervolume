@@ -17,20 +17,40 @@ setClass("HypervolumeList", slots=c(
     HVList="list"
   ))
 
+
 summary.Hypervolume <- function(object, ...)
 {
-  cat(sprintf("Hypervolume\n\tName: %s\n\tNr. of observations: %.0f\n\tDimensionality: %.0f\n\tVolume: %f\n\tBandwidth: %s\n\tDisjunctfactor: %f\n\tQuantile desired: %f\n\tQuantile obtained: %f\n\tNr. of repetitions per point: %.0f\n\tNumber of random points: %.0f\n", 
-              object@Name, ifelse(all(is.nan(object@Data)), NA, nrow(object@Data)), object@Dimensionality, object@Volume, paste(format(object@Bandwidth,digits=2),collapse=' '), object@DisjunctFactor, object@QuantileThresholdDesired, object@QuantileThresholdObtained, object@RepsPerPoint, nrow(object@RandomUniformPointsThresholded)))
-
+  cat(sprintf("Hypervolume\n\tName: %s\n\tNr. of observations: %d\n\tDimensionality: %d\n\tVolume: %f\n\tBandwidth: %s\n\tDisjunct factor: %f\n\tQuantile desired: %f\n\tQuantile obtained: %f\n\tNr. of repetitions per point: %.0f\n\tNumber of random points: %.0f\n", 
+              object@Name, ifelse(all(is.nan(object@Data)), 0, nrow(object@Data)), object@Dimensionality, object@Volume, paste(format(object@Bandwidth,digits=2),collapse=' '), object@DisjunctFactor, object@QuantileThresholdDesired, object@QuantileThresholdObtained, object@RepsPerPoint, nrow(object@RandomUniformPointsThresholded)))
+  
 }
 
 summary.HypervolumeList <- function(object, ...)
 {
+  cat(sprintf("HypervolumeList with %d elements:\n\n", length(object@HVList)))
+  
   for (i in 1:length(object@HVList))
   {
-    summary(object@HVList[[i]])
+    whichhv <- object@HVList[[i]]
+    
+    summary.Hypervolume(whichhv)
   }
 }
 
 setMethod("show","Hypervolume", function(object) {summary.Hypervolume(object)})
 setMethod("show","HypervolumeList", function(object) {summary.HypervolumeList(object)})
+
+
+get_volume.Hypervolume <- function(object)
+{
+  return(object@Volume)
+}
+
+get_volume.HypervolumeList <- function(object)
+{
+  sapply(object@HVList, get_volume.Hypervolume)
+} 
+
+setGeneric("get_volume", function(object) {})
+setMethod("get_volume","Hypervolume", function(object) {get_volume.Hypervolume(object)})
+setMethod("get_volume","HypervolumeList", function(object) {get_volume.HypervolumeList(object)})

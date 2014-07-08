@@ -58,5 +58,5 @@ hv2 = hypervolume(subset(iris, Species=="virginica")[,1:4],reps=1000,bandwidth=0
 hv_set = hypervolume_set(hv1, hv2, reduction_factor = 0.5, check_memory=FALSE)
 
 # no overlap found
-sapply(hv_set@HVList, function(x) {x@Volume})
+get_volume(hv_set)
 }
