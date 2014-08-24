@@ -143,6 +143,10 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T, check_memor
   # clean up memory
   gc()
   
+  # get column names
+  cn <- dimnames(hv1@RandomUniformPointsThresholded)[[2]]
+  dn <- list(NULL, cn)
+  
   # prepare final hypervolumes
   result_intersection = new("Hypervolume")
   result_intersection@Name = sprintf("Intersection of (%s, %s)", hv1@Name, hv2@Name)
@@ -155,7 +159,8 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T, check_memor
   result_intersection@RepsPerPoint = NaN
   result_intersection@QuantileThresholdDesired = 0
   result_intersection@QuantileThresholdObtained = 0
-  result_intersection@RandomUniformPointsThresholded = as.matrix(final_points_intersection); dimnames(result_intersection@RandomUniformPointsThresholded) = dimnames(hv1@RandomUniformPointsThresholded);
+  result_intersection@RandomUniformPointsThresholded = matrix(as.matrix(as.data.frame(final_points_intersection)),ncol=dim)  
+  dimnames(result_intersection@RandomUniformPointsThresholded) = dn
   result_intersection@ProbabilityDensityAtRandomUniformPoints = rep(1,nrow(result_intersection@RandomUniformPointsThresholded))
  
   result_union = new("Hypervolume")
@@ -169,7 +174,8 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T, check_memor
   result_union@RepsPerPoint = NaN
   result_union@QuantileThresholdDesired = 0
   result_union@QuantileThresholdObtained = 0
-  result_union@RandomUniformPointsThresholded = as.matrix(final_points_union); dimnames(result_union@RandomUniformPointsThresholded) = dimnames(hv1@RandomUniformPointsThresholded);
+  result_union@RandomUniformPointsThresholded = matrix(as.matrix(as.data.frame(final_points_union)),ncol=dim)
+  dimnames(result_union@RandomUniformPointsThresholded) = dn
   result_union@ProbabilityDensityAtRandomUniformPoints = rep(1,nrow(result_union@RandomUniformPointsThresholded))
   
   result_unique_hv1 = new("Hypervolume")
@@ -183,7 +189,8 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T, check_memor
   result_unique_hv1@RepsPerPoint = NaN
   result_unique_hv1@QuantileThresholdDesired = 0
   result_unique_hv1@QuantileThresholdObtained = 0
-  result_unique_hv1@RandomUniformPointsThresholded = as.matrix(final_points_in_unique_1); dimnames(result_unique_hv1@RandomUniformPointsThresholded) = dimnames(hv1@RandomUniformPointsThresholded);
+  result_unique_hv1@RandomUniformPointsThresholded = matrix(as.matrix(as.data.frame(final_points_in_unique_1)),ncol=dim)
+  dimnames(result_unique_hv1@RandomUniformPointsThresholded) = dn
   result_unique_hv1@ProbabilityDensityAtRandomUniformPoints = rep(1,nrow(result_unique_hv1@RandomUniformPointsThresholded))
 
   result_unique_hv2 = new("Hypervolume")
@@ -197,7 +204,8 @@ hypervolume_set <- function(hv1, hv2, reduction_factor=1, verbose=T, check_memor
   result_unique_hv2@RepsPerPoint = NaN
   result_unique_hv2@QuantileThresholdDesired = 0
   result_unique_hv2@QuantileThresholdObtained = 0
-  result_unique_hv2@RandomUniformPointsThresholded = as.matrix(final_points_in_unique_2); dimnames(result_unique_hv2@RandomUniformPointsThresholded) = dimnames(hv2@RandomUniformPointsThresholded);
+  result_unique_hv2@RandomUniformPointsThresholded = matrix(as.matrix(as.data.frame(final_points_in_unique_2)),ncol=dim)
+  dimnames(result_unique_hv2@RandomUniformPointsThresholded) = dn
   result_unique_hv2@ProbabilityDensityAtRandomUniformPoints = rep(1,nrow(result_unique_hv2@RandomUniformPointsThresholded))
   
   # assemble final results into a list
