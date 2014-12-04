@@ -1,6 +1,6 @@
 useDynLib(hypervolume)
 
-export(hypervolume, plot.HypervolumeList, plot.Hypervolume, hypervolume_set, hypervolume_inclusion_test, summary.Hypervolume, summary.HypervolumeList, estimate_bandwidth, hypervolume_importance, nonconvexfeatures, get_volume, get_volume.Hypervolume, get_volume.HypervolumeList) 
+export(hypervolume, plot.HypervolumeList, plot.Hypervolume, hypervolume_set, hypervolume_inclusion_test, summary.Hypervolume, summary.HypervolumeList, estimate_bandwidth, hypervolume_importance, negative_features, expectation_box, expectation_convex, expectation_maximal, expectation_ball, get_volume, get_volume.Hypervolume, get_volume.HypervolumeList, hypervolume_join) 
 
 exportClasses(
     "Hypervolume",

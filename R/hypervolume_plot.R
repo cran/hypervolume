@@ -6,9 +6,19 @@ plot.Hypervolume <- function(x, ...)
   plot.HypervolumeList(templist, ...)
 }
 
-plot.HypervolumeList <- function(x, npmax = 1000, colors=rainbow(length(x@HVList)), names=NULL, reshuffle=TRUE, showdensity=TRUE,showdata=TRUE,darkfactor=0.5,cex.random=0.5,cex.data=0.75,cex.axis=0.75,cex.names=1.0,cex.legend=0.75,legend=TRUE, varlims=NULL,pairplot=TRUE,whichaxes=NULL,...)
+plot.HypervolumeList <- function(x, npmax_data = 1000, npmax_random = 1000, colors=rainbow(length(x@HVList)), names=NULL, reshuffle=TRUE, showdensity=TRUE,showdata=TRUE,darkfactor=0.5,cex.random=0.5,cex.data=0.75,cex.axis=0.75,cex.names=1.0,cex.legend=0.75,legend=TRUE, varlims=NULL,pairplot=TRUE,whichaxes=NULL,...)
 {
-
+  sapply(x@HVList, function(z)
+  {
+    cat(sprintf("Showing %d random points of %d for %s\n",min(nrow(z@RandomUniformPointsThresholded), npmax_random), nrow(z@RandomUniformPointsThresholded), z@Name))
+    if (showdata && length(z@Data) > 0)
+    {
+      npd <- ifelse(all(is.nan(z@Data)), 0, nrow(z@Data))
+      cat(sprintf("Showing %d data points of %d for %s\n",min(npmax_data, npd), npd, z@Name))
+    }    
+    
+  })
+  
   alldims = sapply(x@HVList, function(z) { z@Dimensionality })
   allnames = sapply(x@HVList, function(z) { z@Name })
   stopifnot(all(alldims[1] == alldims))
@@ -17,7 +27,7 @@ plot.HypervolumeList <- function(x, npmax = 1000, colors=rainbow(length(x@HVList
   alldata <- NULL
   for (i in 1:length(x@HVList))
   {
-    ivals = sample(nrow(x@HVList[[i]]@RandomUniformPointsThresholded), npmax, replace=T)
+    ivals = sample(nrow(x@HVList[[i]]@RandomUniformPointsThresholded), min(c(npmax_random, nrow(x@HVList[[i]]@RandomUniformPointsThresholded))))
     subsampledpoints = data.frame(x@HVList[[i]]@RandomUniformPointsThresholded[ivals,])
     densityvals = x@HVList[[i]]@ProbabilityDensityAtRandomUniformPoints[ivals]
     
@@ -33,6 +43,12 @@ plot.HypervolumeList <- function(x, npmax = 1000, colors=rainbow(length(x@HVList
   }  
   all <- unique(all)
   alldata <- as.data.frame(alldata)
+  alldata <- alldata[sample(nrow(alldata), min(c(npmax_data, nrow(alldata)))),]
+  
+  if (is.null(all))
+  {
+    stop('Nothing to plot.')
+  }
   
   if (reshuffle==TRUE)
   {
@@ -85,7 +101,7 @@ plot.HypervolumeList <- function(x, npmax = 1000, colors=rainbow(length(x@HVList
           
           points(all[,j], all[,i], col=colorlist,cex=cex.random,pch=16)
           
-          if (showdata)
+          if (showdata & nrow(alldata) > 0)
           {
             points(alldata[,j], alldata[,i], col=colorlistdata,cex=cex.data,pch=16)
           }

@@ -8,7 +8,7 @@ Set operations (intersection / union / unique components)
 Computes the intersection, union, and unique components of two hypervolumes.
 }
 \usage{
-hypervolume_set(hv1, hv2, reduction_factor = 1, verbose = T, check_memory = T)
+hypervolume_set(hv1, hv2, npoints_max = NULL, verbose = TRUE, check_memory = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -18,8 +18,8 @@ A n-dimensional hypervolume
   \item{hv2}{
 A n-dimensional hypervolume
 }
-  \item{reduction_factor}{
-A number in (0,1] that represents the fraction of random points sampled from each hypervolume for the stochastic inclusion test. Larger values are more accurate but computationally slower.
+  \item{npoints_max}{
+Maximum number of random points to use for set operations. If \code{NULL} defaults to 10*10^sqrt(n) where n is the dimensionality of the input hypervolumes.
 }
   \item{verbose}{
 Logical value; print diagnostic output if true.
@@ -33,7 +33,7 @@ Uses the inclusion test approach to identify points in the first hypervolume tha
 
 By default, the function uses {check_memory=TRUE} which will provide an estimate of the computational cost of the set operations. The function should then be re-run with {check_memory=FALSE} if the cost is acceptable. This algorithm's memory and time cost scale quadratically with the number of input points, so large datasets can have disproportionately high costs. This error-checking is intended to prevent the user from large accidental memory allocation. 
 
-If the computational cost is too high, a small value of {reduction_factor} can be specified to reduce the number of points randomly sampled for this stochastic analysis. Linear decreases in this parameter produce quadratic improvements in cost. 
+The computation is actually performed on a random sample from both input hypervolumes, constraining each to have the same point density given by the minimum of the point density of each input hypervolume, and the point density calculated using the volumes of each input hypervolume divided by \code{npoints_max}.
 }
 \value{
 If {check_memory} is false, returns a HypervolumeList object, with four items in its HVList slot:
@@ -55,7 +55,7 @@ data(iris)
 hv1 = hypervolume(subset(iris, Species=="setosa")[,1:4],reps=1000,bandwidth=0.2,warn=FALSE)
 hv2 = hypervolume(subset(iris, Species=="virginica")[,1:4],reps=1000,bandwidth=0.2,warn=FALSE)
 
-hv_set = hypervolume_set(hv1, hv2, reduction_factor = 0.5, check_memory=FALSE)
+hv_set = hypervolume_set(hv1, hv2, check_memory=FALSE)
 
 # no overlap found
 get_volume(hv_set)

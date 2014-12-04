@@ -8,7 +8,7 @@ Hypervolume construction
 Constructs a hypervolume from a set of observations via thresholding a kernel density estimate of the observations. Assumes a hyperbox kernel.
 }
 \usage{
-hypervolume(data, repsperpoint=1000, bandwidth, 
+hypervolume(data, repsperpoint=NULL, bandwidth, 
   quantile = 0, name = NULL, 
   verbose = T, warnings = T)
 }
@@ -18,7 +18,7 @@ hypervolume(data, repsperpoint=1000, bandwidth,
 A m x n matrix or data frame, where m is the number of observations and n is the dimensionality.
 }
   \item{repsperpoint}{
-The number of random points to generate in the kernel around each data point. Larger values are needed in higher dimensions, and generally produce more accurate results.
+The number of random points to generate in the kernel around each data point. Larger values are needed in higher dimensions, and generally produce more accurate results. If \code{NULL}, defaults to 100*10^sqrt(n) where n is the dimensionality of the input data.
 }
   \item{bandwidth}{
 A scalar or a n x 1 vector corresponding to the half-width of the box kernel in each dimension. If a scalar input, the single value is used for all dimensions. Bandwidth also can be estimated using \code{\link{estimate_bandwidth}} if necessary (not recommended).
@@ -38,6 +38,8 @@ Logical value; checks for several potential issues in the input data if true. Ch
 }
 \details{
 Constructs a kernel density estimate by overlaying hyperbox kernels on each datapoint, then sampling uniformly random points from each kernel. Kernel density at each point is then determined by a range query on a recursive partitioning tree and used to resample these random points to a uniform density and fixed number, from which a volume can be inferred.
+
+Note that when comparing among hypervolumes constructed with fixed bandwidth, volume will be approximately a an approximately linear function of the number of input data points.
 }
 \value{
 A \code{\link{Hypervolume-class}} object corresponding to the inferred hypervolume.

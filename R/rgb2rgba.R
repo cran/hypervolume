@@ -13,6 +13,11 @@ rgb2rgba <- function(colorlist, alphalist)
 
 rgb2rgbdark <- function(colorlist, darkfactor)
 {
+  if (length(colorlist) == 0)
+  {
+    colorlist <- 'red'
+  }
+  
   result <- rep(NA, length(colorlist))
   for (i in 1:length(colorlist))
   {

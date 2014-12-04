@@ -9,7 +9,8 @@ Plot a hypervolume or list of hypervolumes
 Plots a single hypervolume or multiple hypervolumes as either a pairs plot (all axes) or a 3D plot (a subset of axes). The hypervolume is drawn as a uniformly random set of points guaranteed to be in the hypervolume.
 }
 \usage{
-\method{plot}{HypervolumeList}(x, npmax = 1000, 
+\method{plot}{HypervolumeList}(x, 
+  npmax_data = 1000, npmax_random=1000,
   colors = rainbow(length(x@HVList)), names = NULL, 
   reshuffle = TRUE, showdensity = TRUE, showdata = TRUE, 
   darkfactor = 0.5, cex.random = 0.5, cex.data = 0.75, 
@@ -22,14 +23,17 @@ Plots a single hypervolume or multiple hypervolumes as either a pairs plot (all 
   \item{x}{
 A Hypervolume or HypervolumeList object. The objects to be plotted.
 }
-  \item{npmax}{
-An integer indicating the maximum number of random points to be sampled from each hypervolume. Lower values result in faster plotting and smaller file sizes but less accuracy.
+  \item{npmax_data}{
+An integer indicating the maximum number of data points to be sampled from each hypervolume. Lower values result in faster plotting and smaller file sizes but less accuracy.
+}
+  \item{npmax_random}{
+An integer indicating the maximum number of data points to be sampled from each hypervolume. Lower values result in faster plotting and smaller file sizes but less accuracy.
 }
   \item{colors}{
 A vector of colors to be used to plot each hypervolume, in the same order as the input hypervolumes.
 }
   \item{names}{
-A vector of strings in the same order as the input hypervolumes. Used to draw the legend.
+A vector of strings in the same order as the input hypervolumes. Used to draw the axes labels.
 }
   \item{reshuffle}{
 A logical value relevant when pair=TRUE. If false, each hypervolume is drawn on top of the previous hypervolume; if true, all points of all hypervolumes are randomly shuffled so no hypervolume is given visual preference during plotting.
@@ -83,5 +87,5 @@ data(iris)
 hv1 = hypervolume(subset(iris, Species=="setosa")[,1:4],reps=1000,bandwidth=0.2)
 
 # choose fixed axes
-plot(hv1, pair=TRUE, npmax=500, varlims=list(c(3,6),c(2,5),c(0,3),c(-1,1)))
+plot(hv1, pair=TRUE, varlims=list(c(3,6),c(2,5),c(0,3),c(-1,1)))
 }

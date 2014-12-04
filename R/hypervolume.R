@@ -1,9 +1,15 @@
-hypervolume <- function(data, repsperpoint=1000, bandwidth, quantile=0.0, name=NULL, verbose=T, warnings=T)
+hypervolume <- function(data, repsperpoint=NULL, bandwidth, quantile=0.0, name=NULL, verbose=T, warnings=T)
 {
   data <- as.data.frame(data)
   
   dim = ncol(data)
   np = nrow(data)
+  
+  if (is.null(repsperpoint))
+  {
+    repsperpoint = floor(100*10^sqrt(ncol(data)))
+    cat(sprintf('Choosing repsperpoint=%.0f (use a larger value for more accuracy.)\n',repsperpoint))
+  }
   
   if (nrow(data) == 0)
   {
@@ -23,6 +29,11 @@ hypervolume <- function(data, repsperpoint=1000, bandwidth, quantile=0.0, name=N
   if (length(bandwidth) != ncol(data))
   {
     stop('Input bandwidth vector not same length as dimensionality of dataset.')
+  }
+  
+  if (any(bandwidth==0))
+  {
+    stop('Bandwidth must be non-zero.')
   }
   
   ### CHECK FOR WARNINGS
