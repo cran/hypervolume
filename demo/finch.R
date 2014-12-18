@@ -29,7 +29,7 @@ if (exists('doHypervolumeFinchDemo')==TRUE)
       if (i!=j)
       {
         # compute set operations on each pair
-        this_set = hypervolume_set(hv_finches_list@HVList[[i]], hv_finches_list@HVList[[j]],reduction_factor=0.5, check_memory=FALSE)
+        this_set = hypervolume_set(hv_finches_list@HVList[[i]], hv_finches_list@HVList[[j]], check_memory=FALSE)
         # calculate a Sorensen overlap index (2 x shared volume / sum of |hv1| + |hv2|)
         overlap[i,j] = 2 * this_set@HVList$Intersection@Volume / (hv_finches_list@HVList[[i]]@Volume + hv_finches_list@HVList[[j]]@Volume)
       }
@@ -39,7 +39,7 @@ if (exists('doHypervolumeFinchDemo')==TRUE)
 
   
   # show all hypervolumes
-  plot(hv_finches_list,npmax=500,darkfactor=0.5,cex.legend=0.25,cex.names=0.75)
+  plot(hv_finches_list,npmax.random=500,darkfactor=0.5,cex.legend=0.25,cex.names=0.75)
   
   # show pairwise overlaps - note that actually very few species overlap in nine dimensions
   op <- par(mar=c(10,10,1,1))
