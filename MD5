@@ -1,5 +1,5 @@
-299e374bf4c1f8e64ccc8b5c8a79cd6c *DESCRIPTION
-5fedd03ef5147394c1effbaeab1ec58a *NAMESPACE
+430a4729e522956c8feea9b8a5737614 *DESCRIPTION
+fee287835f15a9614fcae74c8a0c8584 *NAMESPACE
 0383700da8af92887489dbdf4be832d3 *R/AllClassDefinitions.R
 f5da94243ff42f0fd902be30b122e158 *R/RcppExports.R
 f24e93edef20086a7cccdc7a26dac66c *R/estimate_bandwidth.R
@@ -7,10 +7,12 @@ ee222248c9ab89dbe628aec12c97e21f *R/evalfrectangular.R
 b23431c3608701685123cc890a7a0e7e *R/evalfspherical.R
 2ef5073d73b29b77cc9798f11078491d *R/flagexterior.R
 7a58aeaf1a0f256d6d3af0d93f20608a *R/hypervolume.R
+25ceb7bd214695863cd0b4da3f4dfc61 *R/hypervolume_distance.R
 6e4d54e819917c6e927acbdfbbff0b80 *R/hypervolume_importance.R
 b81497adcc35f6da3fd40ec9436be27d *R/hypervolume_inclusion_test.R
 292b72a60f0ed5cbc3b9eb3c10f62917 *R/hypervolume_plot.R
 8bd6a7622137069a43aa16b921237ec1 *R/hypervolume_set.R
+7ed213e174207686edf5aad871c87b2a *R/hypervolume_sorensen_overlap.R
 72a052c8566b8c88d84f60f4d3f496a6 *R/inhull.R
 9ce3816cccb510f8e7d2383a189cdb1a *R/kdtree.R
 fd0ce62ee518285aff1e16f060642904 *R/metropolis.R
@@ -35,10 +37,12 @@ bada730d5d6b53652aae8623e6c4ab47 *man/expectation_box.Rd
 47cf19cf67b8ce2f70e662d458f84876 *man/get_volume.Rd
 c446254cb56ac05afececfdfadc875d0 *man/hypervolume-package.Rd
 f87557dc67d18ff1a099d508a8a784e1 *man/hypervolume.Rd
+2442e3f77274b9983637d670a57322d1 *man/hypervolume_distance.Rd
 d9cd2d5e7a6e0d747d61d5ed832019dc *man/hypervolume_importance.Rd
 174a71feac826964cf55bc9479e24773 *man/hypervolume_inclusion_test.Rd
 11055c929ffaaa4edd055943fea4ee91 *man/hypervolume_join.Rd
-79c4054a8b19a1abdcd3477d10541117 *man/hypervolume_set.Rd
+6f3608106236df7b5d56af2fe3342b5e *man/hypervolume_set.Rd
+c5129424e36b9361903be77036e97709 *man/hypervolume_sorensen_overlap.Rd
 67392806054c35a23426d516edea72b4 *man/negative_features.Rd
 d9a09a23f5c301fd02c16886132b4650 *man/plot.Hypervolume.Rd
 ddd6db1457f654fb7dcd9dc4624ece85 *man/quercus.Rd
@@ -47,5 +51,5 @@ ddd6db1457f654fb7dcd9dc4624ece85 *man/quercus.Rd
 b3f86c20b81b51f5162874977d38784d *src/Makevars
 73505498722ad4b07b0ddb3067e92523 *src/Makevars.win
 a5c31f091aae6e7cd7a7719236a172cf *src/MyHeaps.h
-2457c9f98c4a36b87717342cd04fda4a *src/RcppExports.cpp
+70eea20fbbbb499491344cfc6a401f88 *src/RcppExports.cpp
 f736b7a522b232312fb8dbf2ef8a8741 *src/convert.cpp

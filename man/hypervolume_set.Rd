@@ -54,9 +54,17 @@ If {check_memory} is true, instead returns a scalar with the expected number of 
 data(iris)
 hv1 = hypervolume(subset(iris, Species=="setosa")[,1:4],reps=1000,bandwidth=0.2,warn=FALSE)
 hv2 = hypervolume(subset(iris, Species=="virginica")[,1:4],reps=1000,bandwidth=0.2,warn=FALSE)
+hv3 = hypervolume(subset(iris, Species=="versicolor")[,1:4],reps=1000,bandwidth=0.2,warn=FALSE)
 
-hv_set = hypervolume_set(hv1, hv2, check_memory=FALSE)
 
-# no overlap found
-get_volume(hv_set)
+hv_set12 = hypervolume_set(hv1, hv2, check_memory=FALSE)
+hv_set23 = hypervolume_set(hv2, hv3, check_memory=FALSE)
+
+# no overlap found between setosa and virginica
+hypervolume_sorensen_overlap(hv_set12)
+
+# some overlap found between virginica and versicolor
+hypervolume_sorensen_overlap(hv_set23)
+# examine volumes of each set component
+get_volume(hv_set23)
 }

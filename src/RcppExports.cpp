@@ -12,9 +12,9 @@ BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        SEXP d = Rcpp::as<SEXP >(dSEXP);
-        SEXP nr = Rcpp::as<SEXP >(nrSEXP);
-        SEXP nc = Rcpp::as<SEXP >(ncSEXP);
+        Rcpp::traits::input_parameter< SEXP >::type d(dSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type nr(nrSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type nc(ncSEXP );
         SEXP __result = kdtree_build_intl(d, nr, nc);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
@@ -29,12 +29,12 @@ BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        SEXP tr = Rcpp::as<SEXP >(trSEXP);
-        SEXP ptlist = Rcpp::as<SEXP >(ptlistSEXP);
-        SEXP nr = Rcpp::as<SEXP >(nrSEXP);
-        SEXP nc = Rcpp::as<SEXP >(ncSEXP);
-        SEXP r = Rcpp::as<SEXP >(rSEXP);
-        SEXP verb = Rcpp::as<SEXP >(verbSEXP);
+        Rcpp::traits::input_parameter< SEXP >::type tr(trSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type ptlist(ptlistSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type nr(nrSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type nc(ncSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type r(rSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type verb(verbSEXP );
         SEXP __result = kdtree_ball_query_multiple(tr, ptlist, nr, nc, r, verb);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
@@ -49,12 +49,12 @@ BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        SEXP tr = Rcpp::as<SEXP >(trSEXP);
-        SEXP pminlist = Rcpp::as<SEXP >(pminlistSEXP);
-        SEXP pmaxlist = Rcpp::as<SEXP >(pmaxlistSEXP);
-        SEXP nr = Rcpp::as<SEXP >(nrSEXP);
-        SEXP nc = Rcpp::as<SEXP >(ncSEXP);
-        SEXP verb = Rcpp::as<SEXP >(verbSEXP);
+        Rcpp::traits::input_parameter< SEXP >::type tr(trSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type pminlist(pminlistSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type pmaxlist(pmaxlistSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type nr(nrSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type nc(ncSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type verb(verbSEXP );
         SEXP __result = kdtree_range_query_multiple(tr, pminlist, pmaxlist, nr, nc, verb);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
