@@ -6,7 +6,23 @@ plot.Hypervolume <- function(x, ...)
   plot.HypervolumeList(templist, ...)
 }
 
-plot.HypervolumeList <- function(x, npmax_data = 1000, npmax_random = 1000, colors=rainbow(length(x@HVList)), names=NULL, reshuffle=TRUE, showdensity=TRUE,showdata=TRUE,darkfactor=0.5,cex.random=0.5,cex.data=0.75,cex.axis=0.75,cex.names=1.0,cex.legend=0.75,legend=TRUE, varlims=NULL,pairplot=TRUE,whichaxes=NULL,...)
+extendrange <- function(x,factor=0.5)
+{
+  xmin <- min(x,na.rm=T)
+  xmax <- max(x,na.rm=T)
+  
+  xminf <- xmin - (xmax - xmin)*factor
+  xmaxf <- xmax + (xmax - xmin)*factor
+  
+  return(c(xminf, xmaxf))
+}
+
+plot.HypervolumeList <- function(x, npmax_data = 1000, npmax_random = 1000, 
+                                 colors=rainbow(length(x@HVList)), names=NULL, 
+                                 reshuffle=TRUE, showrandom=TRUE, showdensity=TRUE,showdata=TRUE,darkfactor=0.5,
+                                 cex.random=0.5,cex.data=0.75,cex.axis=0.75,cex.names=1.0,cex.legend=0.75,
+                                 legend=TRUE, varlims=NULL, showcontour=TRUE, contour.lwd=1, contour.filled=FALSE,contour.filled.alpha=0.5,
+                                 pairplot=TRUE,whichaxes=NULL,...)
 {
   sapply(x@HVList, function(z)
   {
@@ -96,11 +112,49 @@ plot.HypervolumeList <- function(x, npmax_data = 1000, npmax_random = 1000, colo
       {
         if (j > i)
         {
+          # set up axes with right limits
           plot(all[,j], all[,i],type="n",axes=F,xlim=varlims[[j]], ylim=varlims[[i]])
           
+          # calculate contours
+          if (showcontour==TRUE)
+          {
+            if (contour.filled==TRUE)
+            {
+              # draw shaded centers
+              for (whichid in 1:length(unique(all$ID)))
+              {
+                allss <- subset(all, all$ID==whichid)
+                kde2dresults <- kde2d(allss[,j], allss[,i],n=50,lims=c(extendrange(allss[,j]),extendrange(allss[,i])))
+  
+                .filled.contour(kde2dresults$x,kde2dresults$y, kde2dresults$z,
+                               col=c(NA,rgb2rgba(colors[whichid],contour.filled.alpha),NA),
+                               levels=c(0,min(kde2dresults$z)+diff(range(kde2dresults$z))*0.05,max(kde2dresults$z)))
+  
+              }
+            }
+            
+            # draw edges
+            for (whichid in 1:length(unique(all$ID)))
+            {
+              allss <- subset(all, all$ID==whichid)
+              kde2dresults <- kde2d(allss[,j], allss[,i],n=50,lims=c(extendrange(allss[,j]),extendrange(allss[,i])))
+
+              contour(kde2dresults,
+                      col=colors[whichid],
+                      levels=min(kde2dresults$z)+diff(range(kde2dresults$z))*0.05,
+                      lwd=contour.lwd,
+                      drawlabels=FALSE,add=TRUE)
+            }
+          }
           
-          points(all[,j], all[,i], col=colorlist,cex=cex.random,pch=16)
           
+          # draw random points
+          if(showrandom==TRUE)
+          {
+            points(all[,j], all[,i], col=colorlist,cex=cex.random,pch=16)
+          }
+          
+          # show data
           if (showdata & nrow(alldata) > 0)
           {
             points(alldata[,j], alldata[,i], col=colorlistdata,cex=cex.data,pch=16)

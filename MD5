@@ -1,5 +1,5 @@
-430a4729e522956c8feea9b8a5737614 *DESCRIPTION
-fee287835f15a9614fcae74c8a0c8584 *NAMESPACE
+1a0cbfddc824b2c9de9dea37ed1aa5aa *DESCRIPTION
+5aed6d5ff2205013de465154698a402a *NAMESPACE
 0383700da8af92887489dbdf4be832d3 *R/AllClassDefinitions.R
 f5da94243ff42f0fd902be30b122e158 *R/RcppExports.R
 f24e93edef20086a7cccdc7a26dac66c *R/estimate_bandwidth.R
@@ -10,7 +10,7 @@ b23431c3608701685123cc890a7a0e7e *R/evalfspherical.R
 25ceb7bd214695863cd0b4da3f4dfc61 *R/hypervolume_distance.R
 6e4d54e819917c6e927acbdfbbff0b80 *R/hypervolume_importance.R
 b81497adcc35f6da3fd40ec9436be27d *R/hypervolume_inclusion_test.R
-292b72a60f0ed5cbc3b9eb3c10f62917 *R/hypervolume_plot.R
+363b7c9adbf1028cfa81e4df268d7acd *R/hypervolume_plot.R
 8bd6a7622137069a43aa16b921237ec1 *R/hypervolume_set.R
 7ed213e174207686edf5aad871c87b2a *R/hypervolume_sorensen_overlap.R
 72a052c8566b8c88d84f60f4d3f496a6 *R/inhull.R
@@ -35,7 +35,7 @@ bada730d5d6b53652aae8623e6c4ab47 *man/expectation_box.Rd
 71c892bde74f3757fc048500c63234df *man/expectation_maximal.Rd
 45df0ca98d6be70065ba8b27b256248d *man/finch.Rd
 47cf19cf67b8ce2f70e662d458f84876 *man/get_volume.Rd
-c446254cb56ac05afececfdfadc875d0 *man/hypervolume-package.Rd
+c0c5b1dbf8967631b9132f5ecd2b6099 *man/hypervolume-package.Rd
 f87557dc67d18ff1a099d508a8a784e1 *man/hypervolume.Rd
 2442e3f77274b9983637d670a57322d1 *man/hypervolume_distance.Rd
 d9cd2d5e7a6e0d747d61d5ed832019dc *man/hypervolume_importance.Rd
@@ -44,7 +44,7 @@ d9cd2d5e7a6e0d747d61d5ed832019dc *man/hypervolume_importance.Rd
 6f3608106236df7b5d56af2fe3342b5e *man/hypervolume_set.Rd
 c5129424e36b9361903be77036e97709 *man/hypervolume_sorensen_overlap.Rd
 67392806054c35a23426d516edea72b4 *man/negative_features.Rd
-d9a09a23f5c301fd02c16886132b4650 *man/plot.Hypervolume.Rd
+f87dc0ce63a3ee9e09c84328186c5710 *man/plot.Hypervolume.Rd
 ddd6db1457f654fb7dcd9dc4624ece85 *man/quercus.Rd
 520687ae929e59120ed7d0ff7fee0469 *man/summary.Hypervolume.Rd
 5adbeb086ddcab02230f00142571c490 *src/KDTree.h
