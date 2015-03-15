@@ -1,7 +1,8 @@
-1a0cbfddc824b2c9de9dea37ed1aa5aa *DESCRIPTION
-5aed6d5ff2205013de465154698a402a *NAMESPACE
+dc58e91fc63257ca36bcf46ab22f7df6 *DESCRIPTION
+a06d498858d87f2c236cadcb646da2d4 *NAMESPACE
 0383700da8af92887489dbdf4be832d3 *R/AllClassDefinitions.R
 f5da94243ff42f0fd902be30b122e158 *R/RcppExports.R
+714fb2747e3cd6aacacf5466068af341 *R/ZZZ.R
 f24e93edef20086a7cccdc7a26dac66c *R/estimate_bandwidth.R
 ee222248c9ab89dbe628aec12c97e21f *R/evalfrectangular.R
 b23431c3608701685123cc890a7a0e7e *R/evalfspherical.R
@@ -10,9 +11,9 @@ b23431c3608701685123cc890a7a0e7e *R/evalfspherical.R
 25ceb7bd214695863cd0b4da3f4dfc61 *R/hypervolume_distance.R
 6e4d54e819917c6e927acbdfbbff0b80 *R/hypervolume_importance.R
 b81497adcc35f6da3fd40ec9436be27d *R/hypervolume_inclusion_test.R
-363b7c9adbf1028cfa81e4df268d7acd *R/hypervolume_plot.R
-8bd6a7622137069a43aa16b921237ec1 *R/hypervolume_set.R
-7ed213e174207686edf5aad871c87b2a *R/hypervolume_sorensen_overlap.R
+ad5b3d4dbc9edd5a72cf769e3490b448 *R/hypervolume_plot.R
+e1afab3aabc51446ef85493ac8f316e6 *R/hypervolume_set.R
+8f483f3d0aa89070ffb2db03c3cf470b *R/hypervolume_sorensen_overlap.R
 72a052c8566b8c88d84f60f4d3f496a6 *R/inhull.R
 9ce3816cccb510f8e7d2383a189cdb1a *R/kdtree.R
 fd0ce62ee518285aff1e16f060642904 *R/metropolis.R
@@ -41,10 +42,10 @@ f87557dc67d18ff1a099d508a8a784e1 *man/hypervolume.Rd
 d9cd2d5e7a6e0d747d61d5ed832019dc *man/hypervolume_importance.Rd
 174a71feac826964cf55bc9479e24773 *man/hypervolume_inclusion_test.Rd
 11055c929ffaaa4edd055943fea4ee91 *man/hypervolume_join.Rd
-6f3608106236df7b5d56af2fe3342b5e *man/hypervolume_set.Rd
-c5129424e36b9361903be77036e97709 *man/hypervolume_sorensen_overlap.Rd
+e0775c8a7fd8976eda75b5576ea4b65d *man/hypervolume_set.Rd
+0c45be091c2ddb5900b760203d598c39 *man/hypervolume_sorensen_overlap.Rd
 67392806054c35a23426d516edea72b4 *man/negative_features.Rd
-f87dc0ce63a3ee9e09c84328186c5710 *man/plot.Hypervolume.Rd
+b710a1591a9432fcf0fc3dc7bb9d1ba5 *man/plot.Hypervolume.Rd
 ddd6db1457f654fb7dcd9dc4624ece85 *man/quercus.Rd
 520687ae929e59120ed7d0ff7fee0469 *man/summary.Hypervolume.Rd
 5adbeb086ddcab02230f00142571c490 *src/KDTree.h
