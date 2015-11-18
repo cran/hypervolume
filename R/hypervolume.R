@@ -55,10 +55,10 @@ hypervolume <- function(data, repsperpoint=NULL, bandwidth, quantile=0.0, name=N
       warning(finalstring)
     }
     
-    if (np <= dim)
+    if (log(np) <= dim)
     {
-      warning(sprintf('Number of observations (%d) is less than or equal to the number of dimensions (%d).\nResults will be very sensitive to bandwidth choice.',
-                      np, dim))
+      warning(sprintf('Log number of observations (%.2f) is less than or equal to the number of dimensions (%d).\nResults may be inaccurate and sensitive to bandwidth choice.\nConsider reducing the dimensionality of the analysis.',
+                      log(np), dim))
     }
     
     if (nrow(data) > 2)
