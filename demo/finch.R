@@ -1,5 +1,8 @@
 if (exists('doHypervolumeFinchDemo')==TRUE)
 {
+  message('Demo structure and results have changed due to improvements between version 1.4.x and version 2.x of the package.\nTo replicate results seen in our 2014 GEB paper please use an older version of the package.')
+  
+  
   data(morphSnodgrassHeller)
   finch_isabela <- morphSnodgrassHeller[morphSnodgrassHeller$IslandID=="Isa_Alb",]
 
@@ -23,9 +26,8 @@ if (exists('doHypervolumeFinchDemo')==TRUE)
     data_this_species_log <- log10(data_this_species)
     
     # make a hypervolume using auto-bandwidth
-      hv_finches_list@HVList[[i]] <- hypervolume(data_this_species_log, 
-                                          bandwidth=estimate_bandwidth(data_this_species_log),
-                                          name=as.character(species_list[i]), warn=FALSE)
+      hv_finches_list@HVList[[i]] <- hypervolume_gaussian(data_this_species_log,
+                                          name=as.character(species_list[i]),verbose=FALSE)
   }
   
   # compute all pairwise overlaps
@@ -38,9 +40,9 @@ if (exists('doHypervolumeFinchDemo')==TRUE)
       if (i!=j)
       {
         # compute set operations on each pair
-        this_set = hypervolume_set(hv_finches_list@HVList[[i]], hv_finches_list@HVList[[j]], check_memory=FALSE)
+        this_set = hypervolume_set(hv_finches_list@HVList[[i]], hv_finches_list@HVList[[j]], check.memory=FALSE)
         # calculate a Sorensen overlap index (2 x shared volume / sum of |hv1| + |hv2|)
-        overlap[i,j] = hypervolume_sorensen_overlap(this_set)
+        overlap[i,j] = hypervolume_overlap_statistics(this_set)["sorensen"]
       }
     }   
   }
@@ -52,7 +54,7 @@ if (exists('doHypervolumeFinchDemo')==TRUE)
   
   # show pairwise overlaps - note that actually very few species overlap in four dimensions
   op <- par(mar=c(10,10,1,1))
-  image(x=1:nrow(overlap), y=1:nrow(overlap), z=overlap,axes=F,xlab='',ylab='',col=rainbow(5))
+  image(x=1:nrow(overlap), y=1:nrow(overlap), z=overlap,axes=FALSE,xlab='',ylab='',col=colorRampPalette(c("lightgray","red"))(100))
   box()
   axis(side=1, at=1:(length(dimnames(overlap)[[1]])),dimnames(overlap)[[1]],las=2,cex.axis=0.75)
   axis(side=2, at=1:(length(dimnames(overlap)[[2]])),dimnames(overlap)[[2]],las=1,cex.axis=0.75)

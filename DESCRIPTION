@@ -1,17 +1,20 @@
 Package: hypervolume
 Type: Package
-Title: High-Dimensional Kernel Density Estimation and Geometry
-        Operations
-Version: 1.4.1
-Date: 2015-11-18
-Author: Benjamin Blonder
+Title: High Dimensional Geometry and Set Operations Using Kernel
+        Density Estimation, Support Vector Machines, and Convex Hulls
+Version: 2.0.7
+Date: 2017-08-06
+Author: Benjamin Blonder, with contributions from David J. Harris
 Maintainer: Benjamin Blonder <bblonder@gmail.com>
-Description: Estimates the shape and volume of high-dimensional datasets and performs set operations: intersection / overlap, union, unique components, inclusion test, and hole detection. Uses stochastic geometry approach to high-dimensional kernel density estimation. Builds n-dimensional convex hulls (polytopes). Can measure the n-dimensional ecological hypervolume and perform species distribution modeling.
+Description: Estimates the shape and volume of high-dimensional datasets and performs set operations: intersection / overlap, union, unique components, inclusion test, and hole detection. Uses stochastic geometry approach to high-dimensional kernel density estimation, support vector machine delineation, and convex hull generation. Applications include modeling trait and niche hypervolumes and species distribution modeling.
 License: GPL-3
 Depends: Rcpp, rgl, methods, R (>= 3.0.0)
-LinkingTo: Rcpp, RcppArmadillo
-Imports: MASS, geometry, ks, fastcluster, compiler
+LinkingTo: Rcpp, RcppArmadillo, progress
+Imports: raster, maps, MASS, geometry, ks, pdist, fastcluster,
+        compiler, e1071, hitandrun, progress, mvtnorm, data.table,
+        rgeos, sp
+Suggests: magick, alphahull
 NeedsCompilation: yes
-Packaged: 2015-11-18 08:24:57 UTC; benjaminblonder
+Packaged: 2017-08-06 23:53:31 UTC; benjaminblonder
 Repository: CRAN
-Date/Publication: 2015-11-18 09:58:14
+Date/Publication: 2017-08-07 07:09:35 UTC

@@ -11,7 +11,8 @@ Because clustering algorithms scale quadratically with the number of input point
 
 }
 \usage{
-hypervolume_segment(hv, distancefactor = hv@Dimensionality, npmax=NULL)
+hypervolume_segment(hv, distance.factor = 1, num.points.max = NULL,
+                 verbose = TRUE, check.memory = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,11 +20,17 @@ hypervolume_segment(hv, distancefactor = hv@Dimensionality, npmax=NULL)
 An input \code{Hypervolume} class object.
 }
 
-  \item{distancefactor}{
+  \item{distance.factor}{
 A numeric value characterizing the distance multiplication factor. Larger values result in fewer distinct output hypervolumes; smaller values result in more.
 }
-\item{npmax}{
+\item{num.points.max}{
 A numeric value describing the maximum number of random points to be retained in the input; passed to \code{hypervolume_thin} before analysis. Set to \code{NULL} to disable thinning.
+}
+\item{verbose}{
+Logical value; print diagnostic output if \code{TRUE}.
+}
+\item{check.memory}{
+Logical value; returns information about expected memory usage if true.
 }
 }
 
@@ -32,9 +39,11 @@ A \code{HypervolumeList} object.
 }
 
 \examples{
+# low sample sizes to meet CRAN time requirements
 data(iris)
-hv1 <- hypervolume(iris[,1:3],bandwidth=0.1)
-hv1_segmented <- hypervolume_segment(hv1, npmax=1000,distancefactor=5)
+hv1 <- hypervolume_gaussian(iris[,1:3],kde.bandwidth=0.1)
+hv1_segmented <- hypervolume_segment(hv1, num.points.max=100, 
+                  distance.factor=2, check.memory=FALSE)
 plot(hv1_segmented)
 }
 \seealso{

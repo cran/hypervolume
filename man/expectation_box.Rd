@@ -1,55 +1,34 @@
 \name{expectation_box}
 \alias{expectation_box}
-\alias{expectation_ball}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Hyperbox, hyperball expectation
+Hyperbox expectation
 }
 \description{
-Creates a hypervolume with geometry of the minimum hyperbox (hyperball) enclosing a set of points
+Generates expectation hypervolume corresponding to an axis-aligned hyperbox that minimally encloses the data.
 }
 \usage{
-expectation_box(input, npoints = NULL, userandom = FALSE)
-expectation_ball(input, npoints = NULL, userandom = FALSE)
+expectation_box(input, point.density = NULL, num.samples = NULL, use.random = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{input}{
-A data frame or hypervolume object whose data are enclosed by the output hypervolume.
+A m x n matrix or data frame, where m is the number of observations and n is the dimensionality.
 }
-  \item{npoints}{
-The number of random points in the output hypervolume. If \code{NULL} and \code{input} is of class \code{Hypervolume}, defaults to a value that matches the point density of the input hypervolume; if \code{NULL} and \code{input} is a data frame, defaults to 10*10^n, where n is the dimensionality.
+  \item{point.density}{
+The point density of the output expectation. If \code{NULL}, defaults to \code{v / num.points} where \code{d} is the dimensionality of the input and v is the volume of the hypersphere.
 }
-  \item{userandom}{
-If \code{input} is a hypervolume and \code{userandom} is \code{TRUE}, the output hypervolume will enclose the uniformly random points defining the hypervolume; otherwise, it will enclose the data points used to build the hypervolume. If \code{input} is a data frame, this argument is ignored.
+  \item{num.samples}{
+The number of points in the output expectation. If \code{NULL}, defaults to \code{10^(3+sqrt(ncol(d)))} where \code{d} is the dimensionality of the input. \code{num.points} has priority over \code{point.density}; both cannot be specified.
+}
+  \item{use.random}{
+If \code{TRUE} and the \code{input} is of class \code{Hypervolume}, sets boundaries based on the \code{@RandomPoints} slot; otherwise uses \code{@Data}.
 }
 }
-
 \value{
-A \code{Hypervolume} object containing a uniformly random set of points sampled from the hyperbox (hyperball) enclosing the input data.
+A \code{Hypervolume-class} object corresponding to the expectation.
 }
-\author{
-Benjamin Blonder
-}
-
-
 \examples{
 data(iris)
-hv1 = hypervolume(subset(iris, Species=="setosa")[,1:4],bandwidth=0.2)
-
-hvboxdata = expectation_box(hv1, userandom=FALSE)
-hvboxrandom = expectation_box(hv1, userandom=TRUE)
-
-# show the two expectations
-#plot(hypervolume_join(hv1, hvboxdata))
-#plot(hypervolume_join(hv1, hvboxrandom))
-
-
-# ball expectation
-hvballdata = expectation_ball(hv1@Data, userandom=FALSE, npoints=10000)
-hvballrandom = expectation_ball(hv1, userandom=TRUE, npoints=10000)
-
-# show the two expectations
-#plot(hypervolume_join(hv1, hvballdata))
-#plot(hypervolume_join(hv1, hvballrandom))
+e_box <- expectation_box(iris[,1:3])
 }

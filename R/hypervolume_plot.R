@@ -1,3 +1,37 @@
+do_outline_alpha <- function(rp, alpha)
+{
+  ah = alphahull::ashape(rp,alpha=alpha)
+  return(ah)
+}
+
+#do_outline_concave <- function(rp, concavity)
+#{
+#  cm = concaveman::concaveman(rp,concavity=concavity, length_threshold=0)
+#  return(cm)
+#}
+
+do_outline_ball <- function(rp, radius)
+{
+  gb = rgeos::gBuffer(sp::SpatialPoints(rp), quadsegs=2, width=radius)
+  return(gb)
+}
+
+do_outline_raster <- function(pts,res)
+{
+  pts <- as.matrix(pts)
+  
+  pr <- padded_range(pts,multiply.interval.amount=0.25)
+  
+  e <- extent(t(pr))
+  
+  r <- raster::raster(e, ncol=res, nrow=res)
+  
+  x <- raster::rasterize(pts, r, rep(1, nrow(pts)), fun=mean,background=NA)
+  
+  w <- raster::rasterToPolygons(x,dissolve=TRUE)
+  
+  return(w)	
+}
 
 plot.Hypervolume <- function(x, ...)
 {
@@ -8,8 +42,8 @@ plot.Hypervolume <- function(x, ...)
 
 extendrange <- function(x,factor=0.5)
 {
-  xmin <- min(x,na.rm=T)
-  xmax <- max(x,na.rm=T)
+  xmin <- min(x,na.rm=TRUE)
+  xmax <- max(x,na.rm=TRUE)
   
   xminf <- xmin - (xmax - xmin)*factor
   xmaxf <- xmax + (xmax - xmin)*factor
@@ -19,24 +53,47 @@ extendrange <- function(x,factor=0.5)
   return(result)
 }
 
-plot.HypervolumeList <- function(x, npmax_data = 1000, npmax_random = 2000, 
-                                 colors=rainbow(length(x@HVList),alpha=0.8), names=NULL, 
-                                 reshuffle=TRUE, showrandom=TRUE, showdensity=TRUE,showdata=TRUE,darkfactor=0.5,
+plot.HypervolumeList <- function(x, 
+                                 show.3d=FALSE,plot.3d.axes.id=NULL,
+                                 show.axes=TRUE, show.frame=TRUE,
+                                 show.random=TRUE, show.density=TRUE,show.data=TRUE,
+                                 names=NULL, show.legend=TRUE, limits=NULL, 
+                                 show.contour=TRUE, contour.lwd=1.5, 
+                                   contour.type='alphahull', 
+                                   contour.alphahull.alpha=0.25,
+                                   contour.ball.radius.factor=1, 
+                                   contour.kde.level=0.01,
+                                   contour.raster.resolution=100,
+                                 show.centroid=TRUE, cex.centroid=2,
+                                 colors=rainbow(floor(length(x@HVList)*1.5),alpha=0.8), 
+                                 point.alpha.min=0.2, point.dark.factor=0.5,
                                  cex.random=0.5,cex.data=0.75,cex.axis=0.75,cex.names=1.0,cex.legend=0.75,
-                                 legend=TRUE, varlims=NULL, showcontour=TRUE, contour.lwd=1, contour.filled=FALSE,contour.filled.alpha=0.5,contour.factor=0.05,
-                                 showcentroid=TRUE, cex.centroid=3,
-                                 pairplot=TRUE,whichaxes=NULL,...)
+                                 num.points.max.data = 1000, num.points.max.random = 2000, reshuffle=TRUE,
+                                 plot.function.additional=NULL,
+                                 verbose=FALSE,
+                                 ...)
 {
   sapply(x@HVList, function(z)
   {
-    cat(sprintf("Showing %d random points of %d for %s\n",min(nrow(z@RandomUniformPointsThresholded), npmax_random), nrow(z@RandomUniformPointsThresholded), z@Name))
-    if (showdata && length(z@Data) > 0)
+    if (verbose==TRUE)
+    {
+      cat(sprintf("Showing %d random points of %d for %s\n",min(nrow(z@RandomPoints), num.points.max.random), nrow(z@RandomPoints), z@Name))
+    }
+    if (show.data && length(z@Data) > 0)
     {
       npd <- ifelse(all(is.nan(z@Data)), 0, nrow(z@Data))
-      cat(sprintf("Showing %d data points of %d for %s\n",min(npmax_data, npd), npd, z@Name))
+      if (verbose==TRUE)
+      {
+        cat(sprintf("Showing %d data points of %d for %s\n",min(num.points.max.data, npd), npd, z@Name))
+      }
     }    
     
   })
+  
+  if (!requireNamespace("alphahull", quietly = TRUE)) {
+    warning("The package 'alphahull' is needed for contour plotting with contour.type='alphahull'. Please install it to continue.\n\n *** Temporarily setting contour.type='kde'.", call. = FALSE)
+    contour.type <- 'kde'
+  }
   
   alldims = sapply(x@HVList, function(z) { z@Dimensionality })
   allnames = sapply(x@HVList, function(z) { z@Name })
@@ -46,71 +103,102 @@ plot.HypervolumeList <- function(x, npmax_data = 1000, npmax_random = 2000,
   alldata <- NULL
   for (i in 1:length(x@HVList))
   {
-    ivals = sample(nrow(x@HVList[[i]]@RandomUniformPointsThresholded), min(c(npmax_random, nrow(x@HVList[[i]]@RandomUniformPointsThresholded))))
-    subsampledpoints = data.frame(x@HVList[[i]]@RandomUniformPointsThresholded[ivals,,drop=FALSE])
-    densityvals = x@HVList[[i]]@ProbabilityDensityAtRandomUniformPoints[ivals]
+    ivals = sample(nrow(x@HVList[[i]]@RandomPoints), min(c(num.points.max.random, nrow(x@HVList[[i]]@RandomPoints))))
+    subsampledpoints = data.frame(x@HVList[[i]]@RandomPoints[ivals,,drop=FALSE])
+    densityvals = x@HVList[[i]]@ValueAtRandomPoints[ivals]
     
     if (nrow(subsampledpoints) > 0)
     {  
-      subsampledpoints = cbind(subsampledpoints, ID=rep(i, nrow(subsampledpoints)), Density=densityvals/max(densityvals,na.rm=T))
-    
+      subsampledpoints = cbind(subsampledpoints, ID=rep(i, nrow(subsampledpoints)), Density=(densityvals-min(densityvals,na.rm=TRUE))/(max(densityvals,na.rm=TRUE)-min(densityvals,na.rm=TRUE)))
+      subsampledpoints[is.nan(subsampledpoints[,"Density"]),"Density"] <- 1
       all <- rbind(all, subsampledpoints)
     }
     
     thisdata=x@HVList[[i]]@Data
     alldata <- rbind(alldata, cbind(thisdata, ID=rep(i,nrow(thisdata))))
   }  
-  all <- unique(all)
+
   alldata <- as.data.frame(alldata)
-  alldata <- alldata[sample(nrow(alldata), min(c(npmax_data, nrow(alldata)))),]
+  if (num.points.max.data < nrow(alldata) && !is.null(num.points.max.data))
+  {
+  	alldata <- alldata[sample(nrow(alldata), min(c(num.points.max.data, nrow(alldata)))),]
+  }
   
   if (is.null(all))
   {
-    stop('Nothing to plot.')
+    warning('No random points to plot.')
+    if (is.null(dimnames(x@HVList[[1]]@RandomPoints)[[2]]))
+    {
+      all <- matrix(0,ncol=2+alldims,nrow=1,dimnames=list(NULL,c(paste("X",1:alldims,sep=""),"ID","Density")))
+    }
+    else
+    {
+      all <- matrix(0,ncol=2+alldims,nrow=1,dimnames=list(NULL,c(dimnames(x@HVList[[1]]@RandomPoints)[[2]],"ID","Density")))
+    }
+    all <- as.data.frame(all)
   }
   
   if (reshuffle==TRUE)
   {
-    all <- all[sample(nrow(all)),] # reorder to shuffle colors
+    all <- all[sample(nrow(all),replace=FALSE),,drop=FALSE] # reorder to shuffle colors
+    alldata <- alldata[sample(nrow(alldata),replace=FALSE),,drop=FALSE]
   }
+  
+  no_names_supplied = FALSE
   
   if (is.null(names))
   {
-    names = names(all)[1:(ncol(all)-2)]
+    dn = dimnames(all)[[2]]
+    names = dn[1:(ncol(all)-2)]
+    
+    no_names_supplied = TRUE
   }  
   
-  if (!is.null(varlims) & !is.list(varlims))
+  if (!is.null(limits) & !is.list(limits))
   {
     varlimlist = vector('list',ncol(all)-2)
     for (i in 1:length(varlimlist))
     {
-      varlimlist[[i]] <- varlims
+      varlimlist[[i]] <- limits
     }
-    varlims = varlimlist
+    limits = varlimlist
   }
   
   colorlist <- colors[all$ID]
-  alphavals <- all$Density
-  if (showdensity)
+  alphavals <- (all$Density - quantile(all$Density, 0.025, na.rm=T)) / (quantile(all$Density, 0.975, na.rm=T) - quantile(all$Density,0.025, na.rm=T))
+  alphavals[is.nan(alphavals)] <- 0.5 # in case the quantile is un-informative
+  alphavals[alphavals < 0] <- 0
+  alphavals[alphavals > 1] <- 1
+  alphavals <- point.alpha.min + (1 - point.alpha.min)*alphavals
+  
+  if (show.density==FALSE)
   {
-    colorlist <- rgb2rgba(colorlist, alphavals)
+    alphavals <- rep(1, length(colorlist))
+  }
+  
+  for (i in 1:length(colorlist))
+  {
+    colorlist[i] <- rgb_2_rgba(colorlist[i], alphavals[i])
   }
   
   colorlistdata = colors[alldata$ID]
-  colorlistdata <- rgb2rgbdark(colorlistdata, darkfactor)
-  
+  for (i in 1:length(colorlistdata))
+  {
+    colorlistdata[i] <- rgb_2_set_hsv(colorlistdata[i], v=1-point.dark.factor)
+  }
   
   if (ncol(all) < 2)
   {
     stop('Plotting only available in n>=2 dimensions.')
   }
   
-  if (pairplot)
+  if (show.3d==FALSE)
   {
     op = par(no.readonly = T)
     
     par(mfrow=c(ncol(all)-2, ncol(all)-2))
     par(mar=c(0,0,0,0))
+    par(oma=c(0.5,0.5,0.5,0.5))
     
     for (i in 1:(ncol(all)-2))
     {
@@ -119,29 +207,27 @@ plot.HypervolumeList <- function(x, npmax_data = 1000, npmax_random = 2000,
         if (j > i)
         {
           # set up axes with right limits
-          plot(all[,j], all[,i],type="n",axes=F,xlim=varlims[[j]], ylim=varlims[[i]])
-  
-          
+          plot(all[,j], all[,i],type="n",axes=FALSE,xlim=limits[[j]], ylim=limits[[i]],bty='n')
           
           # draw random points
-          if(showrandom==TRUE)
+          if(show.random==TRUE)
           {
             points(all[,j], all[,i], col=colorlist,cex=cex.random,pch=16)
           }
           
           # show data
-          if (showdata & nrow(alldata) > 0)
+          if (show.data & nrow(alldata) > 0)
           {
             points(alldata[,j], alldata[,i], col=colorlistdata,cex=cex.data,pch=16)
           }
           
-          if (showcentroid == TRUE)
+          if (show.centroid == TRUE)
           {
             for (whichid in 1:length(unique(all$ID)))
             {
               allss <- subset(all, all$ID==whichid)
-              centroid_x <- mean(allss[,j],na.rm=T) + rnorm(1)*diff(range(all[,j]))*0.01
-              centroid_y <- mean(allss[,i],na.rm=T) + rnorm(1)*diff(range(all[,i]))*0.01
+              centroid_x <- mean(allss[,j],na.rm=TRUE) 
+              centroid_y <- mean(allss[,i],na.rm=TRUE)
               
               # draw point
               points(centroid_x, centroid_y, col=colors[whichid],cex=cex.centroid,pch=16)
@@ -152,78 +238,85 @@ plot.HypervolumeList <- function(x, npmax_data = 1000, npmax_random = 2000,
           
           
           # calculate contours
-          if (showcontour==TRUE)
+          if (show.contour==TRUE)
           {
-            if (contour.filled==TRUE)
-            {
-              # draw shaded centers
-              for (whichid in 1:length(unique(all$ID)))
-              {
-                allss <- subset(all, all$ID==whichid)
-                
-                if (nrow(allss) > 0)
-                {     
-                  contourx <- allss[,j]
-                  contoury <- allss[,i]
-                  
-                  kde2dresults <- kde2d(contourx, contoury, n=50,lims=c(extendrange(contourx),extendrange(contoury)))
-                  
-                  .filled.contour(kde2dresults$x,kde2dresults$y, kde2dresults$z,
-                                  col=c(NA,rgb2rgba(colors[whichid],contour.filled.alpha),NA),
-                                  levels=c(0,min(kde2dresults$z)+diff(range(kde2dresults$z))*contour.factor,max(kde2dresults$z)))
-                }
-              }
-            }
-            
-            # draw edges
+            # draw shaded centers
             for (whichid in 1:length(unique(all$ID)))
             {
-              allss <- subset(all, all$ID==whichid)
+              allss <- subset(all, all$ID==whichid) # remove oversampling of some points
               
               if (nrow(allss) > 0)
-              {         
+              {     
                 contourx <- allss[,j]
                 contoury <- allss[,i]
                 
-                if (length(contourx) > 1 & length(contoury) > 1)
+                rp = cbind(contourx, contoury)
+                vol_this = x@HVList[[whichid]]@Volume
+                density_this = nrow(rp) / vol_this
+                dim_this = x@HVList[[whichid]]@Dimensionality
+                radius_critical <- density_this^(-1/dim_this) * contour.ball.radius.factor
+                
+                if (contour.type=='alphahull')
                 {
-                  kde2dresults <- kde2d(contourx, contoury, n=50,lims=c(extendrange(contourx),extendrange(contoury)))
+                  poly_outline = do_outline_alpha(rp=rp, alpha=contour.alphahull.alpha)
+                  plot(poly_outline,add=TRUE,wpoints=FALSE,wlines='none',lwd=contour.lwd,col=colors[whichid])
+                }
+                else if (contour.type=='ball')
+                {
+                  poly_outline <- do_outline_ball(rp=rp, radius=radius_critical)
                   
-                  contour(kde2dresults,
-                          col=colors[whichid],
-                          levels=min(kde2dresults$z)+diff(range(kde2dresults$z))*contour.factor,
-                          lwd=contour.lwd,
-                          drawlabels=FALSE,add=TRUE)
+                  plot(poly_outline, add=TRUE,lwd=contour.lwd,col=colors[whichid])
+                }
+                else if (contour.type=='kde')
+                {
+                  m_kde = kde2d(rp[,1], rp[,2], n=50, h=radius_critical)
+                  contour(m_kde, add=TRUE, levels=contour.kde.level,drawlabels=FALSE,lwd=contour.lwd,col=colors[whichid])
+                }
+                else if (contour.type=='raster')
+                {
+                  poly_raster <- do_outline_raster(as.matrix(rp),res=contour.raster.resolution)
+                  plot(poly_raster, add=TRUE, lwd=contour.lwd,col=colors[whichid])
                 }
               }
             }
           }
           
-          box()
+          if (!is.null(plot.function.additional))
+          {
+            plot.function.additional(j,i)
+          }
+          
+          if (show.frame==TRUE)
+          {
+            box()
+          }
         }
         else if (j == i)
         {
-          plot(0,0,type="n",xlim=c(0,1),ylim=c(0,1),axes=F)
+          plot(0,0,type="n",xlim=c(0,1),ylim=c(0,1),axes=FALSE)
           text(0.5, 0.5, names[j],cex=cex.names)
         }
         else if (j==1 & i == (ncol(all) - 2))
         {
-          plot(0,0,type="n",xlim=c(0,1),ylim=c(0,1),axes=F)
+          plot(0,0,type="n",xlim=c(0,1),ylim=c(0,1),axes=FALSE)
           
-          if (legend == TRUE)
+          if (show.legend == TRUE)
           {
             legend('topleft',legend=allnames,text.col=colors,bty='n',cex=cex.legend)
           }
         }
         else
         {
-          plot(0,0,type="n",axes=F)    
+          plot(0,0,type="n",axes=FALSE)    
         }
         
         if (j==i+1)
         {
-          axis(side=1,cex.axis=cex.axis)
-          axis(side=2,cex.axis=cex.axis)
+          if (show.axes==TRUE)
+          {
+            axis(side=1,cex.axis=cex.axis)
+            axis(side=2,cex.axis=cex.axis)
+          }
         }
       }
     }  
@@ -231,24 +324,32 @@ plot.HypervolumeList <- function(x, npmax_data = 1000, npmax_random = 2000,
   }
   else
   {
-    if (is.null(whichaxes))
+    if (is.null(plot.3d.axes.id))
     {
-      whichaxes=1:3  
+      plot.3d.axes.id=1:3  
     }
-    if (is.null(names))
-    {
-      names <- names(data)
-    }
-    if(length(whichaxes)!=3) { stop('Must specify three axes') }
     
-    if (all(is.numeric(whichaxes)))
+    if (no_names_supplied==TRUE)
+    {
+      axesnames <- names[plot.3d.axes.id]
+    }
+    else
     {
       axesnames <- names
     }
-
-    rgl::plot3d(all[,whichaxes],col=colorlist,xlab=axesnames[1], ylab=axesnames[2], zlab=axesnames[3], xlim=varlims[[1]],ylim=varlims[[2]],zlim=varlims[[3]],size=cex.random,type='p',expand=1.05)
     
-    if (legend==TRUE)
+    if(length(plot.3d.axes.id)!=3) { stop('Must specify three axes') }
+
+    if (show.density==TRUE)
+    {
+      for (i in 1:length(colorlist))
+      {
+        colorlist[i] <- rgb_2_set_hsv(colorlist[i], s=(alphavals[i]^2)) # should do this with alpha, but a workaround for non-transparent OpenGL implementations...
+      }
+    }
+    rgl::plot3d(all[,plot.3d.axes.id],col=colorlist,expand=1.05, xlab=axesnames[1], ylab=axesnames[2], zlab=axesnames[3], xlim=limits[[1]],ylim=limits[[2]],zlim=limits[[3]],size=cex.random,type='p',box=show.frame,axes=show.axes)
+    
+    if (show.legend==TRUE)
     {
       for (i in 1:length(allnames))
       {
@@ -256,22 +357,22 @@ plot.HypervolumeList <- function(x, npmax_data = 1000, npmax_random = 2000,
       }
     }
     
-    if (showdata)
+    if (show.data)
     {
-      if (!any(is.nan(as.matrix(alldata[,whichaxes]))))
+      if (!any(is.nan(as.matrix(alldata[,plot.3d.axes.id]))))
       {
-        rgl::points3d(x=alldata[,whichaxes[1]], y=alldata[,whichaxes[2]], z=alldata[,whichaxes[3]], col=colorlistdata,cex=cex.data,pch=16)
+        rgl::points3d(x=alldata[,plot.3d.axes.id[1]], y=alldata[,plot.3d.axes.id[2]], z=alldata[,plot.3d.axes.id[3]], col=colorlistdata,cex=cex.data,pch=16)
       }
     }
     
-    if (showcentroid == TRUE)
+    if (show.centroid == TRUE)
     {
       for (whichid in 1:length(unique(all$ID)))
       {
         allss <- subset(all, all$ID==whichid)
-        centroid_1 <- mean(allss[,whichaxes[1]],na.rm=T)
-        centroid_2 <- mean(allss[,whichaxes[2]],na.rm=T)
-        centroid_3 <- mean(allss[,whichaxes[3]],na.rm=T)
+        centroid_1 <- mean(allss[,plot.3d.axes.id[1]],na.rm=TRUE)
+        centroid_2 <- mean(allss[,plot.3d.axes.id[2]],na.rm=TRUE)
+        centroid_3 <- mean(allss[,plot.3d.axes.id[3]],na.rm=TRUE)
         
         # draw point
         rgl::points3d(x=centroid_1, y=centroid_2, z=centroid_3, col=colors[whichid],cex=cex.centroid,pch=16)

@@ -1,5 +1,7 @@
 if (exists('doHypervolumeHolesFinchDemo')==TRUE)
 {
+  message('Demo structure and results have changed due to improvements between version 1.4.x and version 2.x of the package.\nTo replicate results seen in our 2016 American Naturalist paper please use an older version of the package.')
+  
   data(morphSnodgrassHeller)
   
   # select data for only Isabela Island
@@ -13,46 +15,45 @@ if (exists('doHypervolumeHolesFinchDemo')==TRUE)
   # convert length units to comparable scales
   trait_data_scaled <- scale(trait_data)
   
-  getholes <- function(bw)
-  {
-    # get overall community hypervolume
-    hv_finch <- hypervolume(trait_data_scaled,bandwidth=bw,name="Isabela Island finches")
-    # compute convex expectation
-    ec_finch <- expectation_convex(hv_finch, check_memory=F)
-    # find holes
-    holes_finch <- hypervolume_holes(hv_finch, ec_finch, set_check_memory=F)
-    
-    # return combined result 
-    return(list(hv=hv_finch, ec=ec_finch, holes=holes_finch))
-  }
-  
   # the below line is commented out because of approximate two-hour runtime
   # bw_plugin <- estimate_bandwidth(trait_data_scaled, method="plug-in")
   # instead, use pre-computed output for that function
   bw_plugin <- c(0.5278828, 0.4883812, 0.5951435, 0.4480163)
   
-  # do holes calculation
-  result <- getholes(bw_plugin)
+  # get overall community hypervolume
+  hv_finch <- hypervolume_gaussian(trait_data_scaled,kde.bandwidth=bw_plugin, quantile.requested=0.5, quantile.requested.type="volume")
+  hv_finch@Name <- "Finches"
+  
+  # compute convex expectation
+  # first thin the hypervolume
+  hv_finch_thinned = hypervolume_thin(hv_finch, num.points=500)
+  
+  ec_finch <- expectation_convex(hv_finch_thinned, check.memory=FALSE, use.random=TRUE)
+  ec_finch@Name <- "Convex expectation"
+  # find holes
+  holes_finch <- hypervolume_holes(hv_finch, ec_finch, set.check.memory=FALSE)
+  holes_finch@Name <- "Holes"
   
   # extract volume statistics
-  vol_hv <- result$hv@Volume
-  vol_ec <- result$ec@Volume
-  vol_holes <- result$holes@Volume
+  volumes <- get_volume(hypervolume_join(hv_finch, ec_finch, holes_finch))
+  # plot volume fractions
+  barplot(volumes)
   
   # calculate fraction of volume that is holey
-  print(hole_volume_ratio <- vol_holes / vol_ec)
+  hole_volume_ratio <- volumes["Holes"] / volumes["Convex expectation"]
+  print(hole_volume_ratio)
   # calculate approximate length of axis occupied
   print(length_ratio <- hole_volume_ratio ^ (1/4))
   
   # plot holes
-  plot(hypervolume_join(result$hv,result$holes),
-       showcentroid=F,darkfactor=0,col=c('purple','green'), npmax_random=2000,
+  plot(hypervolume_join(hv_finch, holes_finch),
+       col=c('purple','green'),
        names=c("Body length","Wing length","Tail length", "Beak width"),
-       legend=F,cex.names=1.5,contour.lwd=3)
+       show.legend=FALSE,cex.names=1.5,contour.lwd=2)
   
   
   # calculate (in transformed coordinates) the centroid of the holes	
-  print(holepos <- apply(result$holes@RandomUniformPointsThresholded,2,mean))
+  holepos <- get_centroid(holes_finch)
   print(holepos)
   
   # calculate (in untransformed coordinates) the centroid of the holes
@@ -63,7 +64,7 @@ if (exists('doHypervolumeHolesFinchDemo')==TRUE)
   
   # determine which other species in the dataset is most similar to the hole
   # calculate species mean trait values
-  speciesmeans <- as.data.frame(do.call("rbind",by(morphSnodgrassHeller[, trait_axes], morphSnodgrassHeller $TaxonOrig, colMeans,na.rm=T)))
+  speciesmeans <- as.data.frame(do.call("rbind",by(morphSnodgrassHeller[, trait_axes], morphSnodgrassHeller $TaxonOrig, colMeans,na.rm=TRUE)))
   # calculate rescaled distances
   scaled_diffs <- scale(speciesmeans - hole_origcoords)
   speciesmeans$dist <- apply(scaled_diffs, 1, function(x) { sqrt(sum(x^2))})
