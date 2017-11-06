@@ -1,7 +1,7 @@
-a09c0d59c8b32c4ca620cb5b2d6d528a *DESCRIPTION
+6c2f38aaa1714170b5f98cd22ce1164e *DESCRIPTION
 24b4424f88e669f4c1056ce52fd55752 *NAMESPACE
 1e80606508ccce8b28c7d652bf1908be *R/AllClassDefinitions.R
-e89aaee74802b5274688f4fcac9f7e72 *R/RcppExports.R
+d780110ab1104663ea8469eb6a9badeb *R/RcppExports.R
 915085cba03378234ca257a973839a34 *R/color_maps.R
 7e21a3cf1035129922620491b3cce3a0 *R/estimate_bandwidth.R
 4f52f7b917fea7e9e658dd6fcd310348 *R/evalfrectangular.R
@@ -16,10 +16,10 @@ cf5fdf24b3f5bb3c6c99f5cb9cb58511 *R/hypervolume_expectation.R
 0069f4bfa59d8112c1aae7990112841a *R/hypervolume_gaussian.R
 87eb4e9b853760d0cad51d16cf8f6d1d *R/hypervolume_general_model.R
 9e34ab94a248886f182ec0ca1f0f1627 *R/hypervolume_holes.R
-e9f90e3ed96cec9e2405d4f57caa7566 *R/hypervolume_inclusion_test.R
+af8769713b1b16fe8e956df286390439 *R/hypervolume_inclusion_test.R
 becc29782916334a3d2a43ee6479a626 *R/hypervolume_join.R
 d1ddfce7ef86939997e92453d27bbdb9 *R/hypervolume_overlap_statistics.R
-e69973e4e74cfa180f28d055ccc8b364 *R/hypervolume_plot.R
+5e3cc8da04273f9040e24b49e997d3f4 *R/hypervolume_plot.R
 38e11239382c3c789a404a661f114536 *R/hypervolume_project.R
 df3c37c2f04b9d1ac30da1fcfcf07056 *R/hypervolume_prune.R
 782970edb735a7f2928115472ffdb76e *R/hypervolume_redundancy.R
@@ -30,7 +30,7 @@ d1a6a12d256bbb114931136bbe70a0b6 *R/hypervolume_set.R
 e24164e3bf6f9199396184b6bbf970cb *R/hypervolume_thin.R
 00db38792f72b49b0a92d6eec5b71c6d *R/hypervolume_threshold.R
 499d68e3622d425bc97466f144f04ad7 *R/hypervolume_variable_importance.R
-3acb4f913a367479911b8a61f5a4dd2e *R/kdtree_build.R
+727abf8b1a6a96cde08dbc9deeb0e8db *R/kdtree_build.R
 149873a681f80ffe7ef4870c46349c6c *R/padded_range.R
 2122428065f3d34fcc1ca30960f85676 *R/repmat.R
 e55250ff39b8e4c46e562c2af0ffd0d9 *R/samplers.R
@@ -79,10 +79,10 @@ d32e44fe6089d32345856a5528e9029d *man/print.Hypervolume.Rd
 ef2939ed3a4db7b63c79fdf078a459fe *man/quercus.Rd
 520687ae929e59120ed7d0ff7fee0469 *man/summary.Hypervolume.Rd
 d53705dabc020deea1e8b3c8b3791f10 *man/weight_data.Rd
-6c65eb60c1c162378db34628427ed88c *src/KDTree.h
+e612b87f8cd8834603b80dafd57e9732 *src/KDTree.h
 fdcb2e0c2502ed804ae55e75cf88055c *src/Makevars
 fdcb2e0c2502ed804ae55e75cf88055c *src/Makevars.win
 a5c31f091aae6e7cd7a7719236a172cf *src/MyHeaps.h
-4a6cb10e67d91c3df09dbafff5dcec77 *src/RcppExports.cpp
-d5d10c83c7e269b3421c2f9d28b2b6ed *src/convert.cpp
+25f90c52075ea50c816c1cc48425080c *src/RcppExports.cpp
+f6e83b70c0ea08470d52f64d6d59177b *src/convert.cpp
 4db2ff4d41eea52eaa9e5c084d5016c6 *src/fastPdist2.cpp
