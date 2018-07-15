@@ -1,6 +1,6 @@
-6d794bc41ff99a58224ea73f26754b82 *DESCRIPTION
+3a84b1f86a484c242c6382b2b7468d10 *DESCRIPTION
 1ef5add2c001908ddf48170ce5070a4f *NAMESPACE
-1e80606508ccce8b28c7d652bf1908be *R/AllClassDefinitions.R
+2504fce4086aa1ded92a46ac12456534 *R/AllClassDefinitions.R
 d780110ab1104663ea8469eb6a9badeb *R/RcppExports.R
 915085cba03378234ca257a973839a34 *R/color_maps.R
 7e21a3cf1035129922620491b3cce3a0 *R/estimate_bandwidth.R
@@ -19,7 +19,7 @@ dab73bca6e26e8dd68f6f7235883ab80 *R/hypervolume_gaussian.R
 af8769713b1b16fe8e956df286390439 *R/hypervolume_inclusion_test.R
 becc29782916334a3d2a43ee6479a626 *R/hypervolume_join.R
 d1ddfce7ef86939997e92453d27bbdb9 *R/hypervolume_overlap_statistics.R
-a9ed45de6a7b4e25abf6ececf806d0b2 *R/hypervolume_plot.R
+0872719d5a7d276fc6190919f0246118 *R/hypervolume_plot.R
 38e11239382c3c789a404a661f114536 *R/hypervolume_project.R
 df3c37c2f04b9d1ac30da1fcfcf07056 *R/hypervolume_prune.R
 782970edb735a7f2928115472ffdb76e *R/hypervolume_redundancy.R
@@ -36,7 +36,7 @@ e24164e3bf6f9199396184b6bbf970cb *R/hypervolume_thin.R
 9ccc1d778970bdcc8a98f0e3de68877e *R/samplers.R
 68e336b162fe81230a673ca9a78b8c27 *R/volume_calculation.R
 09ce520f9c638d05006873e3edc77a8e *R/weight_data.R
-313453b441607968faef73ffcbe9ab16 *build/partial.rdb
+2efcd9b08737fe6d3e629de83890b724 *build/partial.rdb
 cceabacac136caf05eb2f8091cc48e06 *data/morphSnodgrassHeller.txt.gz
 19c6798aede220cac653d5afaa7eee6b *data/quercus.txt.gz
 a4ab66decef1fe807c2f25d0950479d6 *demo/00Index
@@ -75,7 +75,7 @@ cb90023441ad0a7e11baf08e6d8d402a *man/hypervolume_overlap_statistics.Rd
 aa83258f18d261e1e831cc929e32a5a3 *man/hypervolume_variable_importance.Rd
 b41f5539eb64e13b9487989df1e3f456 *man/morphSnodgrassHeller.Rd
 7c3eec608dfd093ad57a6e4f876fe66c *man/padded_range.Rd
-27376838c68823dab0e167c728349e97 *man/plot.Hypervolume.Rd
+e82b4001e31cf52f5442e6f281c7c93e *man/plot.Hypervolume.Rd
 d32e44fe6089d32345856a5528e9029d *man/print.Hypervolume.Rd
 ef2939ed3a4db7b63c79fdf078a459fe *man/quercus.Rd
 520687ae929e59120ed7d0ff7fee0469 *man/summary.Hypervolume.Rd
@@ -83,7 +83,7 @@ aaba6c3de641dd3e5b5e884329ca63f5 *man/weight_data.Rd
 e612b87f8cd8834603b80dafd57e9732 *src/KDTree.h
 fdcb2e0c2502ed804ae55e75cf88055c *src/Makevars
 fdcb2e0c2502ed804ae55e75cf88055c *src/Makevars.win
-a5c31f091aae6e7cd7a7719236a172cf *src/MyHeaps.h
+64a5b03557cf150267c610319fcfe80d *src/MyHeaps.h
 25f90c52075ea50c816c1cc48425080c *src/RcppExports.cpp
 f6e83b70c0ea08470d52f64d6d59177b *src/convert.cpp
 4db2ff4d41eea52eaa9e5c084d5016c6 *src/fastPdist2.cpp
