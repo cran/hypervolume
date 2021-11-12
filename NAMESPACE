@@ -10,8 +10,13 @@ export(
   #nball_volume,
   #evalfrectangular,
   #evalfspherical,
+  #bootstrap,
+  #bootstrap_seq,
+  #k_split,
+  #sampling_bias_bootstrap,
   
   ### (external functions)
+  copy_param_hypervolume,
   estimate_bandwidth, 
   expectation_ball, 
   expectation_box, 
@@ -19,23 +24,33 @@ export(
   expectation_convex, 
   expectation_maximal, 
   get_centroid,
+  get_centroid_weighted,
   get_volume, 
   hypervolume_box,
   hypervolume_distance, 
   hypervolume_estimate_probability,
+  hypervolume_funnel,
   hypervolume_gaussian,
   hypervolume_general_model,
   hypervolume_holes, 
   hypervolume_inclusion_test, 
   hypervolume_join, 
+  hypervolume_overlap_confidence,
   hypervolume_overlap_statistics,
+  hypervolume_overlap_test,
+  hypervolume_n_occupancy,
+  hypervolume_n_occupancy_permute,
+  hypervolume_n_occupancy_test,
+  hypervolume_permute,
   hypervolume_project,
   hypervolume_prune, 
   hypervolume_threshold,
   hypervolume_redundancy,
+  hypervolume_resample,
   hypervolume_save_animated_gif,
   hypervolume_segment, 
   hypervolume_set, 
+  hypervolume_set_n_intersection,
   hypervolume_svm,
   hypervolume_thin, 
   hypervolume_variable_importance, 
@@ -49,6 +64,7 @@ export(
   show.HypervolumeList,
   summary.Hypervolume,
   summary.HypervolumeList,
+  to_hv_list,
   weight_data
 
        ) 
@@ -77,7 +93,7 @@ import(Rcpp)
 import(geometry)
 import(MASS)
 import(methods)
-import(rgl)
+#import(rgl)
 import(ks)
 import(fastcluster)
 import(compiler)
@@ -86,19 +102,26 @@ import(mvtnorm)
 import(data.table)
 import(progress)
 import(pdist)
+import(foreach)
+import(doParallel)
+import(parallel)
+import(ggplot2)
+import(palmerpenguins)
 #import(alphahull)
 #import(concaveman)
 
 importFrom("raster","raster", "getValues","values","extent","rasterToPolygons","rasterize")
 importFrom("grDevices", "col2rgb", "rainbow", "rgb", "hsv", "rgb2hsv")
 importFrom("graphics", ".filled.contour", "axis", "box", "contour","par", "plot", "points", "text","lines")
-importFrom("stats", "cor", "cutree", "dist", "na.omit", "pgamma","rnorm", "runif", "sd", "median", "quantile","rbinom")
+importFrom("stats", "cor", "cutree", "dist", "dnorm", "na.omit", "pgamma", "rmultinom", "rnorm", "runif", "sd", "median", "quantile","rbinom")
 importFrom("utils", "data", "head")
 importFrom("maps", "map")
 importFrom("graphics", "abline", "legend", "mtext")
-importFrom("stats", "predict", "var")
-importFrom("utils", "str")
+importFrom("stats", "predict", "var", "weighted.mean")
+importFrom("utils", "str", "combn")
 importFrom("rgeos","gBuffer")
+importFrom("purrr","reduce")
+importFrom("caret","findLinearCombos")
 
 # problematic sections when using rastertopolygons with dissolve=TRUE
 #importMethodsFrom("rgeos", "rbind2")

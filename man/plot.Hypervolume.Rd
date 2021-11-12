@@ -18,7 +18,7 @@ Plots a single hypervolume or multiple hypervolumes as either a pairs plot (all 
     contour.type='kde', 
     contour.alphahull.alpha=0.25,
     contour.ball.radius.factor=1, 
-    contour.kde.level=0.01,
+    contour.kde.level=1e-04,
     contour.raster.resolution=100,
    show.centroid=TRUE, cex.centroid=2,
    colors=rainbow(floor(length(x@HVList)*1.5),alpha=0.8), 
@@ -35,7 +35,7 @@ Plots a single hypervolume or multiple hypervolumes as either a pairs plot (all 
 A Hypervolume or HypervolumeList object. The objects to be plotted.
 }
 \item{show.3d}{
-If \code{TRUE}, makes a three-dimensional plot of a subset of axes determined by \code{plot.3d.axes.id}; otherwise, a pairs plot of all axes.
+If \code{TRUE}, makes a three-dimensional plot of a subset of axes determined by \code{plot.3d.axes.id}; otherwise, a pairs plot of all axes. Requires that the \code{rgl} library is installed.
 }
 \item{plot.3d.axes.id}{
 Numeric identities of axes to plot in three dimensions. Defaults to 1:3 if set to \code{NULL}.
@@ -152,15 +152,21 @@ Contour line plotting with \code{alphahull} requires the non-FOSS \code{alphahul
 }
 \examples{
 \dontrun{
-data(iris)
-hv = hypervolume_gaussian(iris[,1:3])
+# low parameter values for speed
+data(penguins,package='palmerpenguins')
+penguins_no_na = as.data.frame(na.omit(penguins))
+penguins_adelie = penguins_no_na[penguins_no_na$species=="Adelie",
+                    c("bill_length_mm","bill_depth_mm","flipper_length_mm")]
 
-plot(hv, show.3d=TRUE)
+hv = hypervolume_gaussian(penguins_adelie,name='Adelie')
+
+# 2d plot
 plot(hv, show.3d=FALSE)
 
-plot(hv,plot.function.additional=function(i,j){
-  points( x=iris[iris$Species=="setosa",i],
-          y=iris[iris$Species=="setosa",j],col='purple') 
-  })
+# 3d plot
+if(interactive()) 
+{
+  plot(hv, show.3d=TRUE)
+}
 }
 }

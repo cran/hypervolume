@@ -8,6 +8,8 @@ Geographical projection of hypervolume for species distribution modeling, using 
 Determines a suitability score by calculating the hypervolume value at each of a set of points in an input raster stack based on either a probability density estimation or inclusion test.
 
 Note that projected values are not normalized and are not necessarily constrained to fall between 0 and 1.
+
+Note also that additional arguments can be passed to this function to enable parallel operation (see ... below).
 }
 \usage{
 hypervolume_project(hv, rasters, type = "probability", verbose = TRUE,
@@ -41,10 +43,7 @@ A \code{raster} object of same resolution and extent as the input layers corresp
 \code{\link{hypervolume_estimate_probability}}, \code{\link{hypervolume_inclusion_test}}
 }
 \examples{
-# example does not run to meet CRAN runtime guidelines - set TRUE to run
-hypervolume_project_demo = FALSE
-if (hypervolume_project_demo==TRUE)
-{
+\dontrun{
   # load in lat/lon data
   data('quercus') 
   data_alba = subset(quercus, Species=="Quercus alba")[,c("Longitude","Latitude")]
