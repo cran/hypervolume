@@ -1,4 +1,4 @@
-6d2183679caef17ee1486baf9f47810f *DESCRIPTION
+bcff8c9de7e8a874b534063b58718462 *DESCRIPTION
 ff664c924c764584e923d3d30b1b0b4b *NAMESPACE
 2504fce4086aa1ded92a46ac12456534 *R/AllClassDefinitions.R
 d780110ab1104663ea8469eb6a9badeb *R/RcppExports.R
@@ -16,13 +16,13 @@ a308636793038442c9d911eef0743ed9 *R/globals.R
 f0890ad655d13def0cc9a220d5c9588a *R/hypervolume.R
 e55fb75b88c52710681375b05834c119 *R/hypervolume_box.R
 69327cc619215e0d2c617f56f7efead4 *R/hypervolume_distance.R
-2876939d566a75d39f1a59f08cbecc03 *R/hypervolume_estimate_probability.R
+0ccbcd8ee8572247bf49c6e0f94ee657 *R/hypervolume_estimate_probability.R
 d0aee5edd5f982505ffafecbabc7ea88 *R/hypervolume_expectation.R
 a64fbafab5260355c3ad8196a08a8803 *R/hypervolume_funnel.R
 3799d884ffdaf5dc40f03ad7db12223e *R/hypervolume_gaussian.R
 87eb4e9b853760d0cad51d16cf8f6d1d *R/hypervolume_general_model.R
 9e34ab94a248886f182ec0ca1f0f1627 *R/hypervolume_holes.R
-af8769713b1b16fe8e956df286390439 *R/hypervolume_inclusion_test.R
+2d0924a9a185010683102483527f876c *R/hypervolume_inclusion_test.R
 becc29782916334a3d2a43ee6479a626 *R/hypervolume_join.R
 1f694c1bd0306da5785852a2cfea80b1 *R/hypervolume_n_occupancy.R
 e0d2cfb23fce5f531a3bef7c7c62ccb6 *R/hypervolume_n_occupancy_permute.R
@@ -32,7 +32,7 @@ d1ddfce7ef86939997e92453d27bbdb9 *R/hypervolume_overlap_statistics.R
 1145a625aeb698fee23ff3dc0d9a2b0c *R/hypervolume_overlap_test.R
 91ff36480815ff70ad1b10adcdba2b58 *R/hypervolume_permute.R
 f11b35f333ffb007496844aa86ae788c *R/hypervolume_plot.R
-38e11239382c3c789a404a661f114536 *R/hypervolume_project.R
+784dea230abe03a08a3bd2c5dec8095d *R/hypervolume_project.R
 df3c37c2f04b9d1ac30da1fcfcf07056 *R/hypervolume_prune.R
 782970edb735a7f2928115472ffdb76e *R/hypervolume_redundancy.R
 3061bfa697218aa8f3e3e00b61cd8811 *R/hypervolume_resample.R
@@ -53,7 +53,7 @@ e4fecfe83b3063870f86086da4ecdcba *R/sampling_bias_bootstrap.R
 7f5e758235d6c25201334b843e72496c *R/to_hv_list.R
 68e336b162fe81230a673ca9a78b8c27 *R/volume_calculation.R
 468a1141d8ba6ed60cdd6c00f814c071 *R/weight_data.R
-9ce2309fa59b1974368f8cb6390aa2f5 *build/partial.rdb
+f74d4e9996716292f00b07ec02d11eab *build/partial.rdb
 3388d03c9b9c02d2ba114b3b08bed782 *build/vignette.rds
 cceabacac136caf05eb2f8091cc48e06 *data/morphSnodgrassHeller.txt.gz
 19c6798aede220cac653d5afaa7eee6b *data/quercus.txt.gz
