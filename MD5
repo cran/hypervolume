@@ -1,4 +1,4 @@
-bcff8c9de7e8a874b534063b58718462 *DESCRIPTION
+8c7ab8f65072574f35430a40dbebc714 *DESCRIPTION
 ff664c924c764584e923d3d30b1b0b4b *NAMESPACE
 2504fce4086aa1ded92a46ac12456534 *R/AllClassDefinitions.R
 d780110ab1104663ea8469eb6a9badeb *R/RcppExports.R
@@ -43,7 +43,7 @@ d1a6a12d256bbb114931136bbe70a0b6 *R/hypervolume_set.R
 31b53e86719626a9c4d946a402d4d93a *R/hypervolume_svm.R
 1c23ca8c8ded824e90d8c563abd8671b *R/hypervolume_thin.R
 975926c6056e46253968fb1484fac0b7 *R/hypervolume_threshold.R
-499d68e3622d425bc97466f144f04ad7 *R/hypervolume_variable_importance.R
+1ad2e7de8bceb65df4adcc0ead394c9c *R/hypervolume_variable_importance.R
 7ed8781e830d3584d99cabd7b0ed891a *R/k_split.R
 df5179354b5e386bf0bc1a410ba18546 *R/kdtree_build.R
 149873a681f80ffe7ef4870c46349c6c *R/padded_range.R
@@ -53,7 +53,7 @@ e4fecfe83b3063870f86086da4ecdcba *R/sampling_bias_bootstrap.R
 7f5e758235d6c25201334b843e72496c *R/to_hv_list.R
 68e336b162fe81230a673ca9a78b8c27 *R/volume_calculation.R
 468a1141d8ba6ed60cdd6c00f814c071 *R/weight_data.R
-f74d4e9996716292f00b07ec02d11eab *build/partial.rdb
+49b0957e55863bb10b760985664ae56f *build/partial.rdb
 3388d03c9b9c02d2ba114b3b08bed782 *build/vignette.rds
 cceabacac136caf05eb2f8091cc48e06 *data/morphSnodgrassHeller.txt.gz
 19c6798aede220cac653d5afaa7eee6b *data/quercus.txt.gz
