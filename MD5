@@ -1,5 +1,5 @@
-0bfa517af10fa7b5e92820c91182f0ed *DESCRIPTION
-ff664c924c764584e923d3d30b1b0b4b *NAMESPACE
+002c33e980f6213e58f27992d4b513e8 *DESCRIPTION
+8a0a412d5b198ed2a80efd664141d5c8 *NAMESPACE
 2504fce4086aa1ded92a46ac12456534 *R/AllClassDefinitions.R
 d780110ab1104663ea8469eb6a9badeb *R/RcppExports.R
 b4115c5719f6fd3598630927a8422d2d *R/bootstrap.R
@@ -17,7 +17,7 @@ f0890ad655d13def0cc9a220d5c9588a *R/hypervolume.R
 e55fb75b88c52710681375b05834c119 *R/hypervolume_box.R
 69327cc619215e0d2c617f56f7efead4 *R/hypervolume_distance.R
 cf6b94225f50d36b38a555d6cd731a3f *R/hypervolume_estimate_probability.R
-37f1050ead89f7e1fd398118d972f295 *R/hypervolume_expectation.R
+7b111563a35791aa305b6874a9032df6 *R/hypervolume_expectation.R
 a64fbafab5260355c3ad8196a08a8803 *R/hypervolume_funnel.R
 3799d884ffdaf5dc40f03ad7db12223e *R/hypervolume_gaussian.R
 87eb4e9b853760d0cad51d16cf8f6d1d *R/hypervolume_general_model.R
@@ -53,7 +53,7 @@ e4fecfe83b3063870f86086da4ecdcba *R/sampling_bias_bootstrap.R
 7f5e758235d6c25201334b843e72496c *R/to_hv_list.R
 68e336b162fe81230a673ca9a78b8c27 *R/volume_calculation.R
 468a1141d8ba6ed60cdd6c00f814c071 *R/weight_data.R
-469bfa9e72449f4fc8387cdddc053924 *build/partial.rdb
+d44ceb8e50073994e968069ff7f87074 *build/partial.rdb
 3876d25e73ace1291ed1638688a93c99 *build/vignette.rds
 cceabacac136caf05eb2f8091cc48e06 *data/morphSnodgrassHeller.txt.gz
 19c6798aede220cac653d5afaa7eee6b *data/quercus.txt.gz
@@ -70,7 +70,7 @@ fa994ea935b4b6bf268102df0fe0b384 *man/HypervolumeList-class.Rd
 f3d90b840f0300b7497e037b896780ec *man/estimate_bandwidth.Rd
 ab0b2982451570f502235f7b02a8c1ad *man/expectation_ball.Rd
 f7bc9d2add96f44d05c8b2beabca82a4 *man/expectation_box.Rd
-3d41db5dbae94ee12167fdeddddd433f *man/expectation_convex.Rd
+1471243c3f58f81dcddbf1fc09679e75 *man/expectation_convex.Rd
 18c45c8188219f39cd24b445d0cda0ad *man/expectation_maximal.Rd
 e1bfe14d83ed22cd6016803afd2019ec *man/get_centroid.Rd
 155f17521a7afe73ad68ade4353bfbcc *man/get_centroid_weighted.Rd
