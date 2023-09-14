@@ -11,7 +11,7 @@ Hypervolume resampling methods
   
   - \code{"bootstrap seq"}:    Generates n hypervolumes for each sample size in sequence specified by user
   
-  - \code{"biased bootstrap"}: Bootstraps input hypervolume with biases applied through multivariate normal weights or user specified weights
+  - \code{"weighted bootstrap"}: Same procedure as bootstrap but with sampling weights applied to data (default weights are normal distributed)
 }
 \usage{
 hypervolume_resample(name, 
@@ -20,13 +20,13 @@ hypervolume_resample(name,
                       n = 10, 
                       points_per_resample = "sample_size", 
                       seq = 3:nrow(hv@Data), 
-                      k = 5,
                       cores = 1,
-                      verbose = TRUE, 
+                      verbose = TRUE,
+                      to_file = TRUE,
                       mu = NULL, 
                       sigma = NULL, 
-                      cols_to_bias = 1:ncol(hv@Data), 
-                      weight_func = NULL)
+                      cols_to_weigh = 1:ncol(hv@Data), 
+                      weights = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -37,7 +37,7 @@ File name; The function writes hypervolumes to file in ./Objects/<name>
 A hypervolume object
 }
   \item{method}{
-String input; options are \code{"bootstrap"}, \code{"bootstrap seq"}, and \code{"biased bootstrap"}.
+String input; options are \code{"bootstrap"}, \code{"bootstrap seq"}, and \code{"weighted bootstrap"}.
 }
   \item{n}{
 Number of resamples to take.
@@ -45,14 +45,11 @@ Used for every method.
 }
   \item{points_per_resample}{
 Number of points in each resample. If the input is "sample_size", then the same number of points as the original sample is used.
-Used for \code{method = "bootstrap"} and \code{method = "biased bootstrap"}.
+Used for \code{method = "bootstrap"} and \code{method = "weighted bootstrap"}.
 }
   \item{seq}{
 Sequence of sample sizes. If \code{method = "bootstrap seq"} then the function generates n bootstrapped hypervolumes for each sample size in seq.
 Used for \code{method = "bootstrap seq"}.
-}
-  \item{k}{
-Number of splits. Used only for \code{method = "k_split"}.
 }
   \item{cores}{
 Number of logical cores to use while generating bootstraped hypervolumes. If parallel backend already registered to \code{doParallel}, function will use that backend and ignore the argument in cores.
@@ -60,21 +57,25 @@ Number of logical cores to use while generating bootstraped hypervolumes. If par
   \item{verbose}{
 Logical value; If function is being run sequentially, outputs progress bar in console.
 }
+  \item{to_file}{
+Logical value; If TRUE, writes resampled hypervolumes to file, otherwise returns an object from \code{\link{HypervolumeList-class}}.
+Used for \code{method = "bootstrap"} and \code{method = "weighted bootstrap"}
+}
   \item{mu}{
 Array of values specifying the mean of multivariate normal weights.
-Used for \code{method = "biased bootstrap"}.
+Used for \code{method = "weighted bootstrap"}.
 }
   \item{sigma}{
-Array of values specifying the variance in each dimension. (Lower variance corresponds to stronger bias)
-Used for \code{method = "biased bootstrap"}.
+Array of values specifying the variance in each dimension. (higher variance corresponds to more even weights)
+Used for \code{method = "weighted bootstrap"}.
 }
-  \item{cols_to_bias}{
+  \item{cols_to_weigh}{
 Array of column indices; must be same length as mu and sigma.  
-Used for \code{method = "biased bootstrap"}.
+Used for \code{method = "weighted bootstrap"}.
 }
-  \item{weight_func}{
-Custom weight function that takes in a matrix of values and returns desired weights for each row
-Used for \code{method = "biased bootstrap"}.
+  \item{weights}{
+Custom weight assigned to each row of data when resampling.
+Used for \code{method = "weighted bootstrap"}.
 }
 }
 \details{
@@ -109,19 +110,19 @@ path = hypervolume_resample("example_bootstrap",
                               cores = 12)
 hvs = to_hv_list(path)
 
-# Example 2: Get resample with applied bias
+# Example 2: Get resample with applied weights
 # Get maximum bill length
 max_bill = max(bill_data$bill_length_mm)
 # Make data with larger bill length slightly more likley to be resampled
-biased_path = hypervolume_resample("biased test", 
+weighted_path = hypervolume_resample("weighted test", 
                                     hv, 
-                                    method = "biased bootstrap", 
+                                    method = "weighted bootstrap", 
                                     n = 50, 
                                     cores = 12, 
                                     mu = max_bill, 
                                     sigma = 90, 
-                                    cols_to_bias = "bill_length_mm")
-hvs_biased = to_hv_list(biased_path)
+                                    cols_to_weigh = "bill_length_mm")
+hvs_weighted = to_hv_list(weighted_path)
 }
 }
 

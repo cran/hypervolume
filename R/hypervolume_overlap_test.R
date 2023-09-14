@@ -6,7 +6,7 @@ hypervolume_overlap_test <- function(hv1, hv2, path, alternative = "one-sided", 
   
   exists_cluster = TRUE
   if(cores > 1 & getDoParWorkers() == 1) {
-    # If no cluster is registered, create a new one based on use input
+    # If no cluster is registered, create a new one based on user input
     cl = makeCluster(cores)
     clusterEvalQ(cl, {
       library(hypervolume)
@@ -14,6 +14,17 @@ hypervolume_overlap_test <- function(hv1, hv2, path, alternative = "one-sided", 
     registerDoParallel(cl)
     exists_cluster = FALSE
   }
+  if(cores >1 & getDoParWorkers() > 1) {
+    print("Exsisting cluster registered to doParallel. The existing cluster will be used instead of user specified number of cores.")
+  }
+  
+  on.exit({
+    # If a cluster was created for this specific function call, close cluster and register sequential backend
+    if(!exists_cluster) {
+      stopCluster(cl)
+      registerDoSEQ()
+    }
+  })
   
   if(length(path) == 1) {
     if(length(list.files(path)) == 0) {
@@ -103,11 +114,6 @@ hypervolume_overlap_test <- function(hv1, hv2, path, alternative = "one-sided", 
       ggtitle("Distribution of fraction of Hypervolume 2 that is unique")
   )
   result = list(p_values = p_values, plots = plots, distribution = distribution)
-  
-  if(!exists_cluster) {
-    stopCluster(cl)
-    registerDoSEQ()
-  }
   
   return(result)
 }
