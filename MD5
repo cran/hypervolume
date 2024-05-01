@@ -1,5 +1,5 @@
-39b3bae7978010fce76f0e7d61dfcad4 *DESCRIPTION
-70c531eb2b80940eda0d842d1fed277c *NAMESPACE
+9b5a7b0b31170a4db4f0a33e280cb2ae *DESCRIPTION
+9bf2c543f197bb6c5935bd5e7a0b5627 *NAMESPACE
 2504fce4086aa1ded92a46ac12456534 *R/AllClassDefinitions.R
 d780110ab1104663ea8469eb6a9badeb *R/RcppExports.R
 935350e4a17ba8d0517349ff87efd0d8 *R/bootstrap.R
@@ -70,7 +70,7 @@ bc9e2bc01e747ac5ac88cefda1e0d6a7 *R/progress_bar_foreach.R
 68e336b162fe81230a673ca9a78b8c27 *R/volume_calculation.R
 468a1141d8ba6ed60cdd6c00f814c071 *R/weight_data.R
 c804910c0c3cf51804cb12c746246f7e *R/weighted_bootstrap.R
-c54fb873d0a21f68372c3bab75ec09b3 *build/partial.rdb
+e4d9989bcc9b53010a0665b6fd787853 *build/partial.rdb
 57b54f08ac8dab6009f548a4942fd6c8 *build/vignette.rds
 6a7313fabc82ac45b1f3ff723e5fe771 *data/acacia_pinus.rda
 c99bf5e78dcd9bbc8177675ea3c9fbe0 *data/circles.rda
@@ -130,7 +130,7 @@ de9a180421ee087d492aab890aa1edd4 *man/hypervolume_prune.Rd
 4489b2ae1e0d5398438e500f953a3e6f *man/hypervolume_resample.Rd
 25f10a0d7c253b824cefa9882ccaefcb *man/hypervolume_save_animated_gif.Rd
 f1aedfa831f8915a3dcf222bc6a01b55 *man/hypervolume_segment.Rd
-31f75f88a9e7f866d59e964701449126 *man/hypervolume_set.Rd
+6b83eeceb6684ed6769f719ef423f36d *man/hypervolume_set.Rd
 8924f0daf75f74f12b58a8d1d884804d *man/hypervolume_set_n_intersection.Rd
 6295a6cdd854c6db05ab38f8e3516464 *man/hypervolume_svm.Rd
 77511df2e96249458c2acb4bfb809987 *man/hypervolume_thin.Rd
