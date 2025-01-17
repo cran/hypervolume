@@ -1,5 +1,5 @@
-9b5a7b0b31170a4db4f0a33e280cb2ae *DESCRIPTION
-9bf2c543f197bb6c5935bd5e7a0b5627 *NAMESPACE
+ea8689b3ead7dd7e46c5458615534ae3 *DESCRIPTION
+ed43aa39187224be8879d6f5cc68c182 *NAMESPACE
 2504fce4086aa1ded92a46ac12456534 *R/AllClassDefinitions.R
 d780110ab1104663ea8469eb6a9badeb *R/RcppExports.R
 935350e4a17ba8d0517349ff87efd0d8 *R/bootstrap.R
@@ -24,6 +24,7 @@ a308636793038442c9d911eef0743ed9 *R/globals.R
 f0890ad655d13def0cc9a220d5c9588a *R/hypervolume.R
 e55fb75b88c52710681375b05834c119 *R/hypervolume_box.R
 69327cc619215e0d2c617f56f7efead4 *R/hypervolume_distance.R
+3f62de8a9cc70f44cee8860b2b518f75 *R/hypervolume_distance_point.R
 cf6b94225f50d36b38a555d6cd731a3f *R/hypervolume_estimate_probability.R
 7b111563a35791aa305b6874a9032df6 *R/hypervolume_expectation.R
 a64fbafab5260355c3ad8196a08a8803 *R/hypervolume_funnel.R
@@ -50,11 +51,13 @@ a88064387cf0d6c0f354195918a58915 *R/hypervolume_save_animated_gif.R
 1839c43509fa0620b1a83acc3a55fdc9 *R/hypervolume_segment.R
 d1a6a12d256bbb114931136bbe70a0b6 *R/hypervolume_set.R
 3439456366b61c42caf077793108e134 *R/hypervolume_set_n_intersection.R
+92224e5526d65cc5f124c3b054a96e4c *R/hypervolume_set_n_union.R
 31b53e86719626a9c4d946a402d4d93a *R/hypervolume_svm.R
 1c23ca8c8ded824e90d8c563abd8671b *R/hypervolume_thin.R
 975926c6056e46253968fb1484fac0b7 *R/hypervolume_threshold.R
 deb303165d43ffbc43e1030a02c87826 *R/hypervolume_to_data_frame.R
 1ad2e7de8bceb65df4adcc0ead394c9c *R/hypervolume_variable_importance.R
+15e01a59f64fce33d7139778705f0432 *R/ignore_unused_imports.R
 1805b8420a6e91bbfafc37f42029e5b6 *R/kdtree_build.R
 0dde245b3290ed41fd3816e181a75b99 *R/n_occupancy_function.R
 f709b7ae6e69ba9d4d025e8c95605001 *R/occupancy_bootstrap_gof.R
@@ -70,8 +73,8 @@ bc9e2bc01e747ac5ac88cefda1e0d6a7 *R/progress_bar_foreach.R
 68e336b162fe81230a673ca9a78b8c27 *R/volume_calculation.R
 468a1141d8ba6ed60cdd6c00f814c071 *R/weight_data.R
 c804910c0c3cf51804cb12c746246f7e *R/weighted_bootstrap.R
-e4d9989bcc9b53010a0665b6fd787853 *build/partial.rdb
-57b54f08ac8dab6009f548a4942fd6c8 *build/vignette.rds
+41cfee01cfa3ff1d051ac98d9b82b03e *build/partial.rdb
+863d5fbf0ff98776c4d9ea83e04ec1e9 *build/vignette.rds
 6a7313fabc82ac45b1f3ff723e5fe771 *data/acacia_pinus.rda
 c99bf5e78dcd9bbc8177675ea3c9fbe0 *data/circles.rda
 cceabacac136caf05eb2f8091cc48e06 *data/morphSnodgrassHeller.txt.gz
@@ -80,12 +83,12 @@ a4ab66decef1fe807c2f25d0950479d6 *demo/00Index
 2d58669a4620124ed8d71cb625d8f642 *demo/finch.R
 769fa1e94bc86d34ccb496d7ffd6ba0e *demo/holes_finch.R
 ac1cd8bc3020a4ee83e85780b7076ebb *demo/quercus.R
-494f13f22ec4f7bd4bccf87ffb7353ee *inst/doc/Hypervolume-Resampling.R
+54c014f89881ae77ff8a4ba79a3f6701 *inst/doc/Hypervolume-Resampling.R
 89d09c8544dfc5f0c302d64b6e00c1d5 *inst/doc/Hypervolume-Resampling.Rmd
-cba0eb0343833ccdf313eb966cd432fb *inst/doc/Hypervolume-Resampling.html
+c16fcb639500432c72c23fc2eb972d29 *inst/doc/Hypervolume-Resampling.html
 d5f3a7681880433ea103a78ad05e9bc1 *inst/doc/occupancy.R
 929b10840b6fdfa9b34430f5a962a823 *inst/doc/occupancy.Rmd
-35eae496e9a3a21765d024436c630086 *inst/doc/occupancy.html
+fc297c1cb1a302d72c092819a91d877e *inst/doc/occupancy.html
 bbbc147e6337bd91c682a5a2ba55ea00 *man/Hypervolume-class.Rd
 fa994ea935b4b6bf268102df0fe0b384 *man/HypervolumeList-class.Rd
 bda089af6f38bac40309dab60617bfd5 *man/acacia_pinus.Rd
@@ -109,6 +112,7 @@ ed60586a2fd8bd288c67f7e38d5347db *man/get_occupancy_stats.Rd
 514b94458e3be3f453fbd760ae62429a *man/hypervolume.Rd
 601632b74f9109e3879c3b23f525f0e7 *man/hypervolume_box.Rd
 30d501b0b319c0095b634d522a8b893d *man/hypervolume_distance.Rd
+1c752bebdefeda9a42b9611ad685f6cb *man/hypervolume_distance_point.Rd
 8b72c3cebdde93759caa8d55f3695cab *man/hypervolume_estimate_probability.Rd
 382b97bafee0c6cfddcf5c77884920db *man/hypervolume_funnel.Rd
 c786e146e1381280add25f9d2ffdad7f *man/hypervolume_gaussian.Rd
@@ -130,8 +134,9 @@ de9a180421ee087d492aab890aa1edd4 *man/hypervolume_prune.Rd
 4489b2ae1e0d5398438e500f953a3e6f *man/hypervolume_resample.Rd
 25f10a0d7c253b824cefa9882ccaefcb *man/hypervolume_save_animated_gif.Rd
 f1aedfa831f8915a3dcf222bc6a01b55 *man/hypervolume_segment.Rd
-6b83eeceb6684ed6769f719ef423f36d *man/hypervolume_set.Rd
+cbaf97037e4e4f2b09db500c3354a107 *man/hypervolume_set.Rd
 8924f0daf75f74f12b58a8d1d884804d *man/hypervolume_set_n_intersection.Rd
+d674fc608179f907e6f22240556882c2 *man/hypervolume_set_n_union.Rd
 6295a6cdd854c6db05ab38f8e3516464 *man/hypervolume_svm.Rd
 77511df2e96249458c2acb4bfb809987 *man/hypervolume_thin.Rd
 e6a9b6b363bdb7e2a86c37e3bd1fc240 *man/hypervolume_threshold.Rd

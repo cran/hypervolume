@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -11,11 +11,11 @@ library(ggplot2)
 library(gridExtra)
 library(raster)
 
-## ---- results = "hide"--------------------------------------------------------
+## ----results = "hide"---------------------------------------------------------
 data(penguins)
 data(quercus)
 
-## ---- results = "hide", eval = FALSE------------------------------------------
+## ----results = "hide", eval = FALSE-------------------------------------------
 #  data("quercus")
 #  data_alba = subset(quercus, Species=="Quercus alba")[,c("Longitude","Latitude")]
 #  data_rubra = subset(quercus, Species=="Quercus rubra")[,c("Longitude","Latitude")]
@@ -68,7 +68,7 @@ data(quercus)
 url = "funnel_plot_comparisons.png"
 knitr::include_graphics(url)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  data("quercus")
 #  data_alba = subset(quercus, Species=="Quercus alba")[,c("Longitude","Latitude")]
 #  climatelayers <- getData('worldclim', var='bio', res=10, path=tempdir())
@@ -111,7 +111,7 @@ knitr::include_graphics(url)
 url = "biased_bootstrap_overlap.png"
 knitr::include_graphics(url)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  hv = hypervolume(na.omit(penguins)[,3:6], verbose = FALSE)
 #  cols_to_weigh = c("bill_length_mm", "bill_depth_mm")
 #  
@@ -126,7 +126,7 @@ knitr::include_graphics(url)
 #  combined_dat = data.frame(rbind(hv@Data, biased_hv@Data))
 #  combined_dat['Type'] = rep(c('original', 'biased'), each = nrow(hv@Data))
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  plot1 = ggplot(combined_dat) +
 #    geom_histogram(aes(x = bill_depth_mm, fill = Type), bins = 20) +
 #    facet_wrap(~Type) +
@@ -165,7 +165,7 @@ knitr::include_graphics(url)
 url = "penguin_weights.png"
 knitr::include_graphics(url)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  data("quercus")
 #  data_alba = subset(quercus, Species=="Quercus alba")[,c("Longitude","Latitude")]
 #  data_rubra = subset(quercus, Species=="Quercus rubra")[,c("Longitude","Latitude")]
@@ -222,7 +222,7 @@ knitr::include_graphics(url)
 url = "overlap_test_demos.png"
 knitr::include_graphics(url)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(foreach)
 #  library(mvtnorm)
 #  library(doParallel)
@@ -264,7 +264,7 @@ knitr::include_graphics(url)
 #  # We will use alpha = 0.05
 #  power = mean(pvals[,"sorensen"] <= 0.05)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  power0 = mean(pvals0[,"sorensen"] <= 0.05)
 #  power1 = mean(pvals1[,"sorensen"] <= 0.05)
 #  power2 = mean(pvals2[,"sorensen"] <= 0.05)
